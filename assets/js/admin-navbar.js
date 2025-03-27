@@ -46,4 +46,29 @@ $(document).ready(function() {
       e.preventDefault();
     });
   });
-  
+  // ตรวจสอบให้แน่ใจว่า DOM โหลดเสร็จแล้ว
+document.addEventListener('DOMContentLoaded', function() {
+  // เปิด/ปิด Sidebar
+  $('#sidebarToggle').on('click', function() {
+    $('body').toggleClass('sidebar-toggled');
+    $('.sidebar').toggleClass('toggled');
+  });
+
+  // เปิด/ปิด Dropdown เมื่อคลิก
+  $('.dropdown-toggle').on('click', function(e) {
+    e.preventDefault();
+    
+    // ปิด dropdown อื่นๆ ที่เปิดอยู่
+    $('.dropdown-menu').not($(this).next('.dropdown-menu')).removeClass('show');
+    
+    // เปิด/ปิด dropdown ปัจจุบัน
+    $(this).next('.dropdown-menu').toggleClass('show');
+  });
+
+  // ปิด dropdown เมื่อคลิกที่อื่นในหน้า
+  $(document).on('click', function(e) {
+    if (!$(e.target).closest('.dropdown').length) {
+      $('.dropdown-menu').removeClass('show');
+    }
+  });
+});

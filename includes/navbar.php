@@ -16,7 +16,7 @@
                     <a class="nav-link" href="<?php echo BASE_URL; ?>/frontend/products.php">สินค้าทังหมด</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">เกี่ยวกับเรา</a>
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/frontend/about.php">เกี่ยวกับเรา</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
