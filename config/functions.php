@@ -388,3 +388,51 @@ function thaiDate(string $date, bool $show_time = false): string {
     
     return $date_string;
 }
+
+// คำนวณการเปลี่ยนแปลงเป็นเปอร์เซ็นต์
+function calculateChange($current, $previous) {
+    if ($previous == 0) return 0;
+    return round((($current - $previous) / $previous) * 100, 2);
+}
+
+// สีสำหรับแต่ละหมวดหมู่
+function getCategoryColor($category) {
+    $colors = [
+        'ขนมปั้นสิบ' => '#4e73df',
+        'ขนมไทย' => '#1cc88a',
+        'ขนมอบ' => '#36b9cc',
+        'ขนมกรุบกรอบ' => '#f6c23e',
+        'อื่นๆ' => '#e74a3b'
+    ];
+    return $colors[$category] ?? '#858796';
+}
+
+// คลาสสถานะออเดอร์
+function getOrderStatusClass($status) {
+    $classes = [
+        'pending' => 'warning',
+        'processing' => 'info',
+        'completed' => 'success',
+        'cancelled' => 'danger',
+        'refunded' => 'secondary'
+    ];
+    return $classes[$status] ?? 'secondary';
+}
+
+// ข้อความสถานะออเดอร์
+function getOrderStatusText($status) {
+    $texts = [
+        'pending' => 'รอดำเนินการ',
+        'processing' => 'กำลังดำเนินการ',
+        'completed' => 'สำเร็จ',
+        'cancelled' => 'ยกเลิก',
+        'refunded' => 'คืนเงิน'
+    ];
+    return $texts[$status] ?? $status;
+}
+
+// ฟังก์ชันคำนวณเปอร์เซ็นต์การเปลี่ยนแปลง
+function calculatePercentageChange($current, $previous) {
+    if ($previous == 0) return 0;
+    return round((($current - $previous) / $previous) * 100, 2);
+}

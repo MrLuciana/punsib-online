@@ -154,7 +154,7 @@ include '../includes/navbar.php';
                                 <?php endif; ?>
                                 
                                 <a href="product-detail.php?id=<?= $product['id'] ?>">
-                                    <img src="<?= asset($product['image'] ?? 'assets/images/no-image.jpg') ?>" 
+                                    <img src="<?= asset($product['image'] ?? 'assets/images/product1.jpg') ?>" 
                                          class="card-img-top" 
                                          alt="<?= htmlspecialchars($product['name']) ?>">
                                 </a>

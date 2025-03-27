@@ -1,0 +1,120 @@
+/* Navbar */
+.admin-navbar {
+    height: 60px;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  }
+  
+  /* Brand Logo */
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+  
+  /* Dropdown Menus */
+  .dropdown-list {
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    width: 20rem;
+  }
+  
+  .dropdown-list .dropdown-header {
+    background-color: #4e73df;
+    border: 1px solid #4e73df;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .dropdown-list .dropdown-item {
+    white-space: normal;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid #eaecf4;
+  }
+  
+  .dropdown-list .dropdown-item:active {
+    background-color: #eaecf4;
+    color: #3a3b45;
+  }
+  
+  /* Badge Counter */
+  .badge-counter {
+    position: absolute;
+    transform: scale(0.7);
+    transform-origin: top right;
+    right: 0.25rem;
+    top: 0.25rem;
+  }
+  
+  /* User Dropdown */
+  .img-profile {
+    height: 2rem;
+    width: 2rem;
+  }
+  
+  /* Icon Circles */
+  .icon-circle {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-circle i {
+    font-size: 1rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .navbar-nav {
+      flex-direction: row;
+    }
+    
+    .dropdown-list {
+      width: 16rem;
+    }
+    
+    .navbar-search {
+      display: none;
+    }
+  }
+  
+  /* Navbar Gradient */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  font-size: 0.9rem;
+}
+
+.icon-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Notification Badge */
+.nav-link .badge {
+  padding: 0.25em 0.4em;
+  font-size: 0.6rem;
+}
+
+/* User Profile */
+.img-profile {
+  object-fit: cover;
+}
+
+/* Modal */
+.modal-content {
+  border: none;
+}
+
+.btn-close-white {
+  filter: invert(1) brightness(100%);
+}
