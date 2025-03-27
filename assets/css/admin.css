@@ -1,117 +1,66 @@
-/* พื้นฐาน - Burnt Orange Theme */
-:root {
-    --burnt-orange: #cc5500;         /* สีหลัก */
-    --burnt-orange-dark: #993d00;    /* สีเข้ม */
-    --burnt-orange-light: #ff8c42;   /* สีอ่อน */
-    --burnt-orange-lighter: #ffb677; /* สีอ่อนกว่า */
-    --burnt-orange-bg: #fff3eb;      /* สีพื้นหลัง */
-  }
-  
-  body {
-      font-family: 'Sarabun', sans-serif;
-      background-color: var(--burnt-orange-bg);
-      margin: 0;
-      padding: 0;
-      color: #5c2c00; /* สีข้อความเข้ม */
-  }
-  
-  .simple-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-  }
-  
-  .dashboard-title {
-      text-align: center;
-      color: var(--burnt-orange-dark);
-      margin-bottom: 30px;
-      font-weight: 600;
-      position: relative;
-      padding-bottom: 10px;
-  }
-  
-  .dashboard-title:after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background-color: var(--burnt-orange);
-  }
-  
-  /* การ์ดสถิติ */
-  .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-  }
-  
-  .stat-card {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(204, 85, 0, 0.1);
-      transition: all 0.3s ease;
-      border-left: 4px solid var(--burnt-orange);
-  }
-  
-  .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(204, 85, 0, 0.15);
-  }
-  
-  .stat-icon {
-      font-size: 2rem;
-      color: var(--burnt-orange);
-      margin-bottom: 10px;
-  }
-  
-  .stat-value {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--burnt-orange-dark);
-      margin: 10px 0;
-  }
-  
-  .stat-label {
-      font-size: 1rem;
-      color: var(--burnt-orange);
-      font-weight: 500;
-  }
-  
-  /* การ์ดแบบพิเศษ */
-  .stat-card.highlight {
-      background: linear-gradient(135deg, var(--burnt-orange) 0%, var(--burnt-orange-dark) 100%);
-      color: white;
-  }
-  
-  .stat-card.highlight .stat-icon,
-  .stat-card.highlight .stat-value,
-  .stat-card.highlight .stat-label {
-      color: white;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-      .stats-grid {
-          grid-template-columns: repeat(2, 1fr);
-      }
-  }
-  
-  @media (max-width: 480px) {
-      .stats-grid {
-          grid-template-columns: 1fr;
-      }
-      
-      .stat-card {
-          padding: 15px;
-      }
-      
-      .stat-value {
-          font-size: 2rem;
-      }
-  }
-  
+/* admin.css */
+.admin-dashboard {
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    margin: 0.25rem 1rem;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar .nav-link.active {
+    color: #fff;
+    background-color: #198754;
+}
+
+.sidebar .nav-link i {
+    margin-right: 4px;
+    color: #727272;
+}
+
+.sidebar .nav-link.active i {
+    color: #fff;
+}
+
+.main-content {
+    padding-top: 1rem;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .sidebar {
+        position: static;
+        height: auto;
+        padding-top: 0;
+    }
+    
+    .main-content {
+        padding-top: 0;
+    }
+}
