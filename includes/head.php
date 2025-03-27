@@ -13,5 +13,10 @@
     
     <!-- Custom CSS -->
     <link href="<?php echo BASE_URL; ?>assets/css/style.css" rel="stylesheet">
+
+    <!-- โหลด jQuery ก่อนสคริปต์อื่น ๆ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>

@@ -250,34 +250,71 @@ include '../includes/navbar.php';
 <script>
 $(document).ready(function() {
     // ระบบเพิ่มสินค้าเข้าตะกร้า
-    $('.add-to-cart').click(function() {
+    $(document).on('click', '.add-to-cart', function() {
         const productId = $(this).data('id');
         const button = $(this);
+        
+        // ปิดการคลิกชั่วคราวเพื่อป้องกันการคลิกซ้ำ
+        button.prop('disabled', true);
+        
+        // แสดงไอคอน loading
+        const originalHtml = button.html();
+        button.html('<i class="fas fa-spinner fa-spin"></i>');
         
         $.ajax({
             url: '<?= BASE_URL ?>includes/cart/add-to-cart.php',
             method: 'POST',
-            data: { product_id: productId, quantity: 1 },
+            data: { 
+                product_id: productId, 
+                quantity: 1,
+                csrf_token: '<?= isset($_SESSION['csrf_token']) ? $_SESSION['csrf_token'] : '' ?>'
+            },
             dataType: 'json',
             success: function(response) {
                 if(response.success) {
                     // อัปเดตจำนวนสินค้าในตะกร้า
                     $('.cart-count').text(response.cart_count);
                     
-                    // แสดงข้อความสำเร็จ
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'เพิ่มสินค้าเรียบร้อย',
-                        text: 'สินค้าถูกเพิ่มลงในตะกร้าแล้ว',
+                    // แสดงข้อความสำเร็จแบบโต้ตอบ
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    });
+                    
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'เพิ่มสินค้าลงตะกร้าเรียบร้อยแล้ว'
                     });
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'เกิดข้อผิดพลาด',
-                        text: response.message
-                    });
+                    if (response.login_required) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'กรุณาเข้าสู่ระบบ',
+                            text: 'คุณต้องเข้าสู่ระบบก่อนจึงจะสามารถเพิ่มสินค้าลงตะกร้าได้',
+                            showCancelButton: true,
+                            confirmButtonText: 'เข้าสู่ระบบ',
+                            cancelButtonText: 'ปิด',
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '<?= BASE_URL ?>login.php?redirect=' + 
+                                    encodeURIComponent(window.location.href);
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เกิดข้อผิดพลาด',
+                            text: response.message
+                        });
+                    }
                 }
             },
             error: function() {
@@ -286,6 +323,11 @@ $(document).ready(function() {
                     title: 'เกิดข้อผิดพลาด',
                     text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
                 });
+            },
+            complete: function() {
+                // คืนสถานะปุ่มเป็นปกติ
+                button.prop('disabled', false);
+                button.html(originalHtml);
             }
         });
     });
@@ -294,8 +336,19 @@ $(document).ready(function() {
     $('#filterForm').on('change', 'select', function() {
         $('#filterForm').submit();
     });
+
+    // ป้องกันการคลิกขวาที่ปุ่ม
+    $(document).on('contextmenu', '.add-to-cart', function(e) {
+        e.preventDefault();
+    });
+
+    // ป้องกันการดับเบิลคลิก
+    $(document).on('dblclick', '.add-to-cart', function(e) {
+        e.preventDefault();
+    });
 });
 </script>
+
 
 <?php
 include '../includes/footer.php';

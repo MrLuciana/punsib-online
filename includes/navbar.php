@@ -10,10 +10,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>">หน้าแรก</a>
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/frontend/index.php">หน้าแรก</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>products.php">สินค้าทังหมด</a>
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/frontend/products.php">สินค้าทังหมด</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">เกี่ยวกับเรา</a>
@@ -21,7 +21,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>cart.php">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/frontend/cart.php">
                         <i class="fas fa-shopping-cart"></i> ตะกร้า
                         <span class="badge bg-danger cart-count">0</span>
                     </a>
