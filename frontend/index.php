@@ -76,7 +76,7 @@ include '../includes/navbar.php';
             </div>
             <div class="col-md-6">
                 <div class="hero-image">
-                    <img src="<?= BASE_URL ?>assets/images/hero-image.webp" alt="ขนมปั้นสิบยายนิด" class="img-fluid rounded shadow">
+                    <img src="<?= BASE_URL ?>assets/images/banner.jpg" alt="ขนมปั้นสิบยายนิด" class="img-fluid rounded shadow">
                 </div>
             </div>
         </div>
@@ -189,7 +189,7 @@ include '../includes/navbar.php';
                     </div>
                     
                     <a href="product-detail.php?id=<?= $product['id'] ?>">
-                        <img src="<?= BASE_URL . ($product['image'] ?? 'assets/images/no-image.jpg') ?>" 
+                        <img src="<?= BASE_URL . ($product['image'] ?? 'assets/images/product1.jpg') ?>" 
                              class="card-img-top" 
                              alt="<?= $product['name'] ?>"
                              loading="lazy">
@@ -235,7 +235,7 @@ include '../includes/navbar.php';
                     </div>
                     
                     <a href="product-detail.php?id=<?= $product['id'] ?>">
-                        <img src="<?= BASE_URL . ($product['image'] ?? 'assets/images/no-image.jpg') ?>" 
+                        <img src="<?= BASE_URL . ($product['image'] ?? 'assets/images/product1.jpg') ?>" 
                              class="card-img-top" 
                              alt="<?= $product['name'] ?>"
                              loading="lazy">
@@ -365,6 +365,123 @@ $(document).ready(function() {
 </script>
 
 <style>
+/* กำหนดโทนสี bronze */
+:root {
+    --primary-color: #cd7f32; /* สี bronze หลัก */
+    --primary-hover: #b87333;
+    --primary-light: #e6c8a0;
+    --primary-dark: #8a5c2e;
+    --secondary-color: #d4a76a; /* สี bronze อ่อน */
+    --light-bg: #f8f1e8; /* สีพื้นหลังอ่อน */
+}
+
+/* Hero Section */
+.hero-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+/* ปุ่ม */
+.btn-success {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-success:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+.btn-outline-success {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-outline-success:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Section Header */
+.section-header:after {
+    background-color: var(--primary-color);
+}
+
+/* Product Card */
+.product-card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(205, 127, 50, 0.1);
+}
+
+/* Badges */
+.badge.bg-success {
+    background-color: var(--primary-color) !important;
+}
+.badge.bg-warning {
+    background-color: #ffc107 !important;
+}
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+.badge.bg-info {
+    background-color: #0dcaf0 !important;
+}
+
+/* Backgrounds */
+.bg-white {
+    background-color: white !important;
+}
+.bg-light {
+    background-color: var(--light-bg) !important;
+}
+
+/* Text Colors */
+.text-success {
+    color: var(--primary-color) !important;
+}
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Navbar */
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.navbar .navbar-nav .nav-link {
+    color: #333;
+}
+.navbar .navbar-nav .nav-link:hover {
+    color: var(--primary-color);
+}
+.navbar .navbar-brand {
+    color: var(--primary-dark);
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--primary-dark);
+    color: white;
+}
+.footer a {
+    color: var(--primary-light);
+}
+.footer a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* Animation และส่วนอื่นๆ เหมือนเดิม */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
 /* Hero Section */
 .hero-section {
     padding: 5rem 0;
