@@ -43,7 +43,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </a>
             </li>
             <li class="nav-item mt-3">
-                <a class="nav-link text-danger" href="../logout.php">
+                <a class="nav-link text-danger" href="<?php echo ADMIN_URL; ?>../logout.php">
                     <i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ
                 </a>
             </li>
