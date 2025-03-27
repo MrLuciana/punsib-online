@@ -168,7 +168,7 @@ include '../includes/navbar.php';
             <div class="col-lg-8 text-center">
                 <h2 class="mb-4">คำสัญญาของเรา</h2>
                 <p class="lead mb-5">เรามุ่งมั่นที่จะรักษามาตรฐานและรสชาติแบบดั้งเดิมของขนมปั้นสิบยายนิด พร้อมทั้งพัฒนาบริการให้ดียิ่งขึ้นเพื่อความพึงพอใจของลูกค้าุกท่าน</p>
-                <a href="products.php" class="btn btn-light btn-lg px-4">ชมสินค้าองเรา</a>
+                <a href="products.php" class="btn btn-light btn-lg px-4">ชมสินค้าของเรา</a>
             </div>
         </div>
     </div>
@@ -212,15 +212,18 @@ include '../includes/navbar.php';
 </section>
 
 <style>
-/* Hero Section */
+/* Hero Section - Bronze Theme */
 .about-hero {
-    background: linear-gradient(135deg, rgba(25, 135, 84, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+    padding: 5rem 0;
 }
 
 /* Section Styling */
 .section-title {
     position: relative;
     display: inline-block;
+    color: #5c3a21; /* สี bronze เข้ม */
+    margin-bottom: 1.5rem;
 }
 
 .section-title:after {
@@ -231,14 +234,14 @@ include '../includes/navbar.php';
     transform: translateX(-50%);
     width: 50px;
     height: 3px;
-    background-color: #198754;
+    background-color: #cd7f32; /* สี bronze หลัก */
 }
 
 .section-divider {
     width: 100px;
     height: 2px;
-    background-color: #198754;
-    margin: 0 auto;
+    background-color: #cd7f32; /* สี bronze หลัก */
+    margin: 0 auto 2rem;
 }
 
 /* Timeline */
@@ -254,7 +257,7 @@ include '../includes/navbar.php';
     top: 0;
     bottom: 0;
     width: 2px;
-    background-color: #198754;
+    background-color: #cd7f32; /* สี bronze หลัก */
 }
 
 .timeline-item {
@@ -270,7 +273,7 @@ include '../includes/navbar.php';
     height: 40px;
     line-height: 40px;
     text-align: center;
-    background-color: #198754;
+    background-color: #cd7f32; /* สี bronze หลัก */
     color: white;
     border-radius: 50%;
     font-weight: bold;
@@ -280,57 +283,90 @@ include '../includes/navbar.php';
     padding: 20px;
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 10px rgba(205, 127, 50, 0.1); /* เงาสี bronze */
+    border-left: 3px solid #cd7f32; /* สี bronze หลัก */
 }
 
 .timeline-content h3 {
-    color: #198754;
+    color: #8a5c2e; /* สี bronze เข้ม */
 }
 
 /* Value Cards */
 .value-card {
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(205, 127, 50, 0.1);
+    border-top: 3px solid #cd7f32; /* สี bronze หลัก */
 }
 
 .value-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(205, 127, 50, 0.15);
 }
 
 .value-icon {
     width: 70px;
     height: 70px;
     line-height: 70px;
-    background-color: rgba(25, 135, 84, 0.1);
-    color: #198754;
+    background-color: rgba(205, 127, 50, 0.1); /* สี bronze หลักแบบโปร่งใส */
+    color: #cd7f32; /* สี bronze หลัก */
     border-radius: 50%;
     font-size: 30px;
+    margin: 0 auto 15px;
 }
 
 /* Team Cards */
 .team-card {
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(205, 127, 50, 0.1);
+    border: none;
 }
 
 .team-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(205, 127, 50, 0.15);
 }
 
 .team-card .card-img-top {
     height: 250px;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.team-card .card-body {
+    background-color: #f8f1e8; /* สี bronze อ่อน */
 }
 
 /* Contact Cards */
 .contact-card {
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(205, 127, 50, 0.1);
+    border-bottom: 3px solid #cd7f32; /* สี bronze หลัก */
 }
 
 .contact-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(205, 127, 50, 0.15);
 }
+
+.contact-icon {
+    color: #cd7f32; /* สี bronze หลัก */
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
 </style>
 
 <?php

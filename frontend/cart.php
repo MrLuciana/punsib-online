@@ -87,7 +87,7 @@ include '../includes/navbar.php';
                                         <tr class="align-middle" data-id="<?= $item['id'] ?>">
                                             <td>
                                                 <a href="product-detail.php?id=<?= $item['id'] ?>">
-                                                    <img src="<?= asset($item['image'] ?? 'assets/images/no-image.jpg') ?>" 
+                                                    <img src="<?= asset($item['image'] ?? 'assets/images/product1.jpg') ?>" 
                                                          class="img-fluid rounded-2" 
                                                          alt="<?= htmlspecialchars($item['name']) ?>"
                                                          style="width: 80px; height: 80px; object-fit: cover;">

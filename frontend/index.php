@@ -155,7 +155,7 @@ include '../includes/navbar.php';
             <div class="col-md-4 col-6 mb-4">
                 <div class="card category-card border-0 shadow-sm h-100">
                     <a href="products.php?category=<?= $category['id'] ?>" class="text-decoration-none">
-                        <img src="<?= BASE_URL . ($category['image'] ?? 'assets/images/category-placeholder.jpg') ?>" 
+                        <img src="<?= BASE_URL . ($category['image'] ?? 'assets/images/product1.jpg') ?>" 
                              class="card-img-top" 
                              alt="<?= $category['name'] ?>">
                         <div class="card-body text-center">
@@ -267,7 +267,7 @@ include '../includes/navbar.php';
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <img src="<?= BASE_URL ?>assets/images/about-image.webp" alt="เกี่ยวกับยายนิด" class="img-fluid rounded shadow">
+                <img src="<?= BASE_URL ?>assets/images/product1.jpg" alt="เกี่ยวกับยายนิด" class="img-fluid rounded shadow">
             </div>
             <div class="col-md-6">
                 <h2 class="mb-4">เกี่ยวกับยายนิด</h2>

@@ -1,20 +1,33 @@
-/* สไตล์สำหรับหน้ารายละเอียดสินค้า */
+/* สไตล์สำหรับหน้ารายละเอียดสินค้า - โทนสี bronze */
 .product-main-image {
     max-height: 500px;
     object-fit: contain;
+    border: 1px solid #e6d5c3; /* เส้นขอบสี bronze อ่อน */
+    border-radius: 8px;
+    background-color: #f8f1e8; /* พื้นหลังสี bronze อ่อน */
 }
 
 .thumbnail-image {
-    border: 1px solid #dee2e6;
-    transition: border-color 0.3s ease;
+    border: 2px solid #e6d5c3; /* เส้นขอบสี bronze อ่อน */
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f8f1e8; /* พื้นหลังสี bronze อ่อน */
 }
 
 .thumbnail-image:hover {
-    border-color: #198754;
+    border-color: #cd7f32; /* สี bronze หลัก */
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(205, 127, 50, 0.1);
 }
 
 .accordion-button:focus {
-    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(205, 127, 50, 0.25); /* เงาสี bronze */
+}
+
+.accordion-button:not(.collapsed) {
+    color: #5c3a21; /* สีข้อความ bronze เข้ม */
+    background-color: #f1e6d6; /* สีพื้นหลัง bronze อ่อน */
 }
 
 .breadcrumb {
@@ -23,8 +36,41 @@
 }
 
 .breadcrumb-item.active {
-    color: #198754;
+    color: #8a5c2e; /* สี bronze เข้ม */
     font-weight: 500;
+}
+
+.breadcrumb-item a {
+    color: #cd7f32; /* สี bronze หลัก */
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #5c3a21; /* สี bronze เข้มกว่า */
+    text-decoration: underline;
+}
+
+/* ปุ่ม */
+.add-to-cart-btn {
+    background-color: #cd7f32; /* สี bronze หลัก */
+    border-color: #cd7f32;
+    color: white;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #b87333; /* สี bronze หลักเมื่อ hover */
+    border-color: #b87333;
+}
+
+.buy-now-btn {
+    background-color: #5c3a21; /* สี bronze เข้ม */
+    border-color: #5c3a21;
+    color: white;
+}
+
+.buy-now-btn:hover {
+    background-color: #3d2615; /* สี bronze เข้มเมื่อ hover */
+    border-color: #3d2615;
 }
 
 /* ปรับขนาดปุ่มบนมือถือ */
@@ -32,5 +78,31 @@
     .add-to-cart-btn, .buy-now-btn {
         font-size: 1rem;
         padding: 0.5rem;
+        width: 100%;
+        margin-bottom: 0.5rem;
     }
+}
+
+/* ส่วนข้อมูลสินค้า */
+.product-title {
+    color: #5c3a21; /* สี bronze เข้ม */
+    border-bottom: 2px solid #e6d5c3; /* เส้นใต้สี bronze อ่อน */
+    padding-bottom: 0.5rem;
+}
+
+.product-price {
+    color: #cd7f32; /* สี bronze หลัก */
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.discount-price {
+    color: #dc3545; /* สีแดงสำหรับส่วนลด */
+    text-decoration: line-through;
+    margin-right: 0.5rem;
+}
+
+.product-description {
+    color: #5c3a21; /* สี bronze เข้ม */
+    line-height: 1.8;
 }

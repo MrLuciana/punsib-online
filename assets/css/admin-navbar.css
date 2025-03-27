@@ -1,118 +1,145 @@
+/* Navbar - Burnt Orange Theme */
+:root {
+  --burnt-orange: #cc5500;         /* สีหลัก */
+  --burnt-orange-dark: #993d00;    /* สีเข้ม */
+  --burnt-orange-light: #ff8c42;   /* สีอ่อน */
+  --burnt-orange-lighter: #ffb677; /* สีอ่อนกว่า */
+  --burnt-orange-bg: #fff3eb;      /* สีพื้นหลัง */
+}
+
 /* Navbar */
 .admin-navbar {
-    height: 60px;
-    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-  }
-  
-  /* Brand Logo */
-  .navbar-brand {
-    font-size: 1.1rem;
-  }
-  
-  /* Dropdown Menus */
-  .dropdown-list {
-    padding: 0;
-    border: none;
-    overflow: hidden;
-    width: 20rem;
-  }
-  
-  .dropdown-list .dropdown-header {
-    background-color: #4e73df;
-    border: 1px solid #4e73df;
-    padding: 0.75rem 1.5rem;
-    color: white;
-    font-weight: 600;
-  }
-  
-  .dropdown-list .dropdown-item {
-    white-space: normal;
-    padding: 0.75rem 1.5rem;
-    border-bottom: 1px solid #eaecf4;
-  }
-  
-  .dropdown-list .dropdown-item:active {
-    background-color: #eaecf4;
-    color: #3a3b45;
-  }
-  
-  /* Badge Counter */
-  .badge-counter {
-    position: absolute;
-    transform: scale(0.7);
-    transform-origin: top right;
-    right: 0.25rem;
-    top: 0.25rem;
-  }
-  
-  /* User Dropdown */
-  .img-profile {
-    height: 2rem;
-    width: 2rem;
-  }
-  
-  /* Icon Circles */
-  .icon-circle {
-    height: 2.5rem;
-    width: 2.5rem;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .icon-circle i {
-    font-size: 1rem;
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .navbar-nav {
-      flex-direction: row;
-    }
-    
-    .dropdown-list {
-      width: 16rem;
-    }
-    
-    .navbar-search {
-      display: none;
-    }
-  }
-  
-  /* Navbar Gradient */
+  height: 60px;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(88, 45, 0, 0.15);
+  background-color: var(--burnt-orange);
+}
+
+/* Brand Logo */
+.navbar-brand {
+  font-size: 1.1rem;
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Navbar Gradient */
 .bg-gradient-primary {
-  background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+  background: linear-gradient(135deg, var(--burnt-orange) 0%, var(--burnt-orange-dark) 100%) !important;
 }
 
-/* Dropdown Menu */
-.dropdown-menu {
-  font-size: 0.9rem;
+/* Dropdown Menus */
+.dropdown-list {
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  width: 20rem;
+  box-shadow: 0 0.5rem 1rem rgba(88, 45, 0, 0.15);
 }
 
+.dropdown-list .dropdown-header {
+  background-color: var(--burnt-orange);
+  border: 1px solid var(--burnt-orange);
+  padding: 0.75rem 1.5rem;
+  color: white;
+  font-weight: 600;
+}
+
+.dropdown-list .dropdown-item {
+  white-space: normal;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--burnt-orange-bg);
+  transition: all 0.2s ease;
+}
+
+.dropdown-list .dropdown-item:hover {
+  background-color: var(--burnt-orange-bg);
+}
+
+.dropdown-list .dropdown-item:active {
+  background-color: var(--burnt-orange-lighter);
+  color: #5c2c00;
+}
+
+/* Badge Counter */
+.badge-counter {
+  position: absolute;
+  transform: scale(0.7);
+  transform-origin: top right;
+  right: 0.25rem;
+  top: 0.25rem;
+  background-color: var(--burnt-orange-dark) !important;
+  color: white;
+}
+
+/* User Dropdown */
+.img-profile {
+  height: 2rem;
+  width: 2rem;
+  border: 2px solid var(--burnt-orange-light);
+}
+
+/* Icon Circles */
 .icon-circle {
-  width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
+  width: 2.5rem;
+  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--burnt-orange-light);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.icon-circle:hover {
+  background-color: var(--burnt-orange-dark);
+}
+
+.icon-circle i {
+  font-size: 1rem;
 }
 
 /* Notification Badge */
 .nav-link .badge {
   padding: 0.25em 0.4em;
   font-size: 0.6rem;
+  background-color: var(--burnt-orange-dark);
+  color: white;
 }
 
-/* User Profile */
-.img-profile {
-  object-fit: cover;
+/* Navbar Links */
+.nav-link {
+  color: rgba(255,255,255,0.8) !important;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: white !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .navbar-nav {
+    flex-direction: row;
+  }
+  
+  .dropdown-list {
+    width: 16rem;
+  }
+  
+  .navbar-search {
+    display: none;
+  }
+  
+  .admin-navbar {
+    height: auto;
+    padding: 0.5rem 0;
+  }
 }
 
 /* Modal */
 .modal-content {
   border: none;
+  box-shadow: 0 0.5rem 1.5rem rgba(88, 45, 0, 0.2);
 }
 
 .btn-close-white {

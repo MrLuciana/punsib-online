@@ -419,23 +419,47 @@ document.querySelectorAll('.add-to-cart-btn, .buy-now-btn').forEach(btn => {
 
 <style>
 /* สไตล์เฉพาะสำหรับหน้ารายละเอียดสินค้า */
+/* รูปภาพสินค้าหลัก */
 .product-main-image {
-    border: 1px solid #eee;
+    border: 1px solid #e6d5c3; /* สี bronze อ่อน */
     border-radius: 10px;
     overflow: hidden;
+    background-color: #f8f1e8; /* พื้นหลังสี bronze อ่อน */
+    transition: all 0.3s ease;
 }
 
+.product-main-image:hover {
+    box-shadow: 0 5px 15px rgba(205, 127, 50, 0.1); /* เงาสี bronze */
+}
+
+/* ตัวชี้เมาส์ */
 .cursor-pointer {
     cursor: pointer;
 }
 
+/* Accordion */
 .accordion-button:not(.collapsed) {
-    background-color: rgba(25, 135, 84, 0.1);
-    color: #198754;
+    background-color: rgba(205, 127, 50, 0.1); /* สี bronze หลักแบบโปร่งใส */
+    color: #5c3a21; /* สี bronze เข้ม */
+    font-weight: 500;
 }
 
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(205, 127, 50, 0.25); /* เงาสี bronze */
+}
+
+/* ตัวเลือกจำนวน */
 .quantity-input {
     -moz-appearance: textfield;
+    border: 1px solid #e6d5c3; /* สี bronze อ่อน */
+    text-align: center;
+    padding: 0.375rem 0.75rem;
+    border-radius: 5px;
+}
+
+.quantity-input:focus {
+    border-color: #cd7f32; /* สี bronze หลัก */
+    box-shadow: 0 0 0 0.25rem rgba(205, 127, 50, 0.25);
 }
 
 .quantity-input::-webkit-outer-spin-button,
@@ -444,10 +468,39 @@ document.querySelectorAll('.add-to-cart-btn, .buy-now-btn').forEach(btn => {
     margin: 0;
 }
 
-.buy-now-btn:hover {
-    background-color: #198754;
+/* ปุ่มซื้อทันที */
+.buy-now-btn {
+    background-color: #5c3a21; /* สี bronze เข้ม */
     color: white;
+    border: none;
+    transition: all 0.3s ease;
 }
+
+.buy-now-btn:hover {
+    background-color: #3d2615; /* สี bronze เข้มกว่า */
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(92, 58, 33, 0.2);
+}
+
+/* ปุ่มเพิ่ม/ลดจำนวน */
+.quantity-btn {
+    background-color: #f1e6d6; /* สี bronze อ่อน */
+    color: #5c3a21; /* สี bronze เข้ม */
+    border: 1px solid #e6d5c3;
+    width: 2.5rem;
+    transition: all 0.2s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #e6d5c3;
+    color: #3d2615;
+}
+
+.quantity-btn:focus {
+    box-shadow: 0 0 0 0.25rem rgba(205, 127, 50, 0.25);
+}
+
 </style>
 
 <?php

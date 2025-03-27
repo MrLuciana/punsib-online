@@ -1,13 +1,14 @@
-/* สไตล์สำหรับหน้า products */
+/* สไตล์สำหรับหน้า products - โทนสี bronze */
 .product-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 10px;
     overflow: hidden;
+    border: 1px solid #e6d5c3; /* เส้นขอบสี bronze อ่อน */
 }
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(205, 127, 50, 0.15); /* เงาสี bronze */
 }
 
 .product-card img {
@@ -20,21 +21,150 @@
     transform: scale(1.05);
 }
 
+/* ปรับสี Badge */
 .badge.bg-light {
-    background-color: #f8f9fa !important;
-    color: #212529 !important;
+    background-color: #f1e6d6 !important; /* สีพื้นหลัง bronze อ่อน */
+    color: #5c3a21 !important; /* สีข้อความ bronze เข้ม */
     font-weight: 500;
 }
 
+/* ปรับสี Pagination */
 .page-item.active .page-link {
-    background-color: #198754;
-    border-color: #198754;
+    background-color: #cd7f32; /* สี bronze หลัก */
+    border-color: #cd7f32;
 }
 
 .page-link {
-    color: #198754;
+    color: #8a5c2e; /* สี bronze เข้ม */
 }
 
 .page-link:hover {
-    color: #146c43;
+    color: #5c3a21; /* สี bronze เข้มกว่า */
+}
+
+/* เพิ่มสไตล์สำหรับปุ่ม */
+.btn-bronze {
+    background-color: #cd7f32;
+    color: white;
+    border-color: #cd7f32;
+}
+
+.btn-bronze:hover {
+    background-color: #b87333;
+    border-color: #b87333;
+    color: white;
+}
+
+.btn-outline-bronze {
+    color: #cd7f32;
+    border-color: #cd7f32;
+}
+
+.btn-outline-bronze:hover {
+    background-color: #cd7f32;
+    color: white;
+}
+
+/* สีข้อความ */
+.text-bronze {
+    color: #cd7f32 !important;
+}
+
+/* สีพื้นหลัง */
+.bg-bronze-light {
+    background-color: #f8f1e8 !important;
+}
+
+/* สไตล์สำหรับหน้ารายการสินค้า - โทนสี bronze */
+:root {
+    --bronze-primary: #cd7f32;
+    --bronze-dark: #5c3a21;
+    --bronze-light: #f8f1e8;
+    --bronze-lighter: #f1e6d6;
+    --bronze-border: #e6d5c3;
+}
+
+/* Card Header */
+.card-header {
+    background-color: var(--bronze-primary) !important;
+    color: white !important;
+}
+
+/* ปุ่ม */
+.btn-success {
+    background-color: var(--bronze-primary);
+    border-color: var(--bronze-primary);
+}
+.btn-success:hover {
+    background-color: #b87333;
+    border-color: #b87333;
+}
+
+/* Product Card */
+.product-card {
+    border: 1px solid var(--bronze-border);
+    transition: all 0.3s ease;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(205, 127, 50, 0.1);
+    border-color: var(--bronze-primary);
+}
+
+/* Badges */
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+.badge.bg-light {
+    background-color: var(--bronze-lighter) !important;
+    color: var(--bronze-dark) !important;
+}
+
+/* ราาสินค้า */
+.text-success {
+    color: var(--bronze-primary) !important;
+}
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Pagination */
+.page-item.active .page-link {
+    background-color: var(--bronze-primary);
+    border-color: var(--bronze-primary);
+}
+.page-link {
+    color: var(--bronze-primary);
+}
+.page-link:hover {
+    color: var(--bronze-dark);
+}
+
+/* Alert */
+.alert-info {
+    background-color: #e7f8ff;
+    border-color: #b8e6ff;
+    color: #006c9c;
+}
+
+/* Form Elements */
+.form-control:focus, .form-select:focus {
+    border-color: var(--bronze-primary);
+    box-shadow: 0 0 0 0.25rem rgba(205, 127, 50, 0.25);
+}
+
+/* Breadcrumb */
+.breadcrumb-item.active {
+    color: var(--bronze-dark);
+    font-weight: 500;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .product-card {
+        margin-bottom: 1.5rem;
+    }
+    .sidebar {
+        margin-bottom: 2rem;
+    }
 }

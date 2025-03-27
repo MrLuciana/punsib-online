@@ -26,6 +26,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/admin-navbar.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/admin.css">
+
 
     
     <style>
