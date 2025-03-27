@@ -8,20 +8,21 @@ $pageTitle = "ตะกร้าสินค้า - ร้านขนมปั
 if (!isLoggedIn()) {
     $_SESSION['redirect_url'] = BASE_URL . 'cart.php';
     setAlert('warning', 'กรุณาเข้าสู่ระบบเพื่อดูตะกร้าสินค้า');
-    redirect('../login.php');
+    redirect('login.php');
 }
 
 // ดึงข้อมูลสินค้าในตะกร้า
 $stmt = $conn->prepare("
-    SELECT c.id as cart_id, c.quantity, p.id, p.name, p.price, p.discount_price, p.image, p.stock
+    SELECT c.id as cart_id, p.id, p.name, p.price, p.discount_price, p.image, c.quantity, p.stock, cat.name as category_name
     FROM cart c
     JOIN products p ON c.product_id = p.id
+    JOIN categories cat ON p.category_id = cat.id
     WHERE c.user_id = ? AND p.status = 1
 ");
 $stmt->execute([$_SESSION['user_id']]);
 $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// คำนวณราารวม
+// คำนวณราคารวม
 $subtotal = 0;
 $totalDiscount = 0;
 $totalItems = 0;
@@ -35,7 +36,8 @@ foreach ($cartItems as $item) {
     $totalItems += $item['quantity'];
 }
 
-$shippingFee = $subtotal >= 500 ? 0 : 30;
+// ค่าจัดส่ง (ฟรีเมื่อสั่งซื้อครบ 500 บาท)
+$shippingFee = $subtotal >= 500 ? 0 : 50;
 $grandTotal = $subtotal + $shippingFee;
 
 include '../includes/head.php';
@@ -47,9 +49,9 @@ include '../includes/navbar.php';
         <div class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="mb-0">
-                    <i class="fas fa-shopping-cart me-2"></i>ตะกร้าสินค้า
+                    <i class="fas fa-shopping-cart me-2"></i>ตะกร้าสินค้าของคุณ
                 </h2>
-                <span class="text-muted"><?= number_format($totalItems) ?> ชิ้น</span>
+                <span class="badge bg-success rounded-pill"><?= number_format($totalItems) ?> ชิ้น</span>
             </div>
 
             <?php if (empty($cartItems)): ?>
@@ -87,7 +89,7 @@ include '../includes/navbar.php';
                                         <tr class="align-middle" data-id="<?= $item['id'] ?>">
                                             <td>
                                                 <a href="product-detail.php?id=<?= $item['id'] ?>">
-                                                    <img src="<?= asset($item['image'] ?? 'assets/images/product1.jpg') ?>" 
+                                                    <img src="<?= asset($item['image'] ?? 'assets/images/no-image.jpg') ?>" 
                                                          class="img-fluid rounded-2" 
                                                          alt="<?= htmlspecialchars($item['name']) ?>"
                                                          style="width: 80px; height: 80px; object-fit: cover;">
@@ -97,10 +99,9 @@ include '../includes/navbar.php';
                                                 <a href="product-detail.php?id=<?= $item['id'] ?>" class="text-decoration-none text-dark">
                                                     <h6 class="mb-1"><?= htmlspecialchars($item['name']) ?></h6>
                                                 </a>
+                                                <small class="text-muted d-block"><?= htmlspecialchars($item['category_name']) ?></small>
                                                 <?php if ($item['discount_price'] > 0): ?>
-                                                    <span class="text-danger small">
-                                                        ลด <?= number_format($item['price'] - $item['discount_price'], 2) ?> บาท
-                                                    </span>
+                                                    <span class="badge bg-danger mt-1">ลด <?= number_format($item['price'] - $item['discount_price'], 2) ?> บาท</span>
                                                 <?php endif; ?>
                                             </td>
                                             <td>
@@ -138,9 +139,12 @@ include '../includes/navbar.php';
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </div>
+                                                <?php if ($item['quantity'] > $item['stock']): ?>
+                                                    <small class="text-danger">มีสินค้าในสต็อกเพียง <?= $item['stock'] ?> ชิ้น</small>
+                                                <?php endif; ?>
                                             </td>
                                             <td class="fw-bold">
-                                                <?= number_format($total, 2) ?>
+                                                <?= number_format($total, 2) ?> บาท
                                             </td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-outline-danger remove-item" 
@@ -186,18 +190,14 @@ include '../includes/navbar.php';
                         <?php endif; ?>
                         <div class="d-flex justify-content-between mb-2">
                             <span>ค่าจัดส่ง</span>
-                            <span>
-                                <?php if ($shippingFee == 0): ?>
-                                    <span class="text-success">ฟรี</span>
-                                <?php else: ?>
-                                    <?= number_format($shippingFee, 2) ?> บาท
-                                <?php endif; ?>
+                            <span id="shippingCost">
+                                <?= $shippingFee == 0 ? '<span class="text-success">ฟรี</span>' : number_format($shippingFee, 2).' บาท' ?>
                             </span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between fw-bold fs-5">
                             <span>รวมทั้งสิ้น</span>
-                            <span><?= number_format($grandTotal, 2) ?> บาท</span>
+                            <span id="totalAmount"><?= number_format($grandTotal, 2) ?> บาท</span>
                         </div>
                     </div>
 
@@ -205,11 +205,10 @@ include '../includes/navbar.php';
                         <a href="checkout.php" class="btn btn-success w-100 py-2 mb-3">
                             <i class="fas fa-credit-card me-2"></i>ดำเนินการชำระเงิน
                         </a>
+                        <div class="alert alert-info small mb-0">
+                            <i class="fas fa-info-circle me-2"></i>ฟรีค่าจัดส่งเมื่อสั่งซื้อครบ 500 บาท
+                        </div>
                     <?php endif; ?>
-
-                    <div class="alert alert-info small mb-0">
-                        <i class="fas fa-info-circle me-2"></i>ฟรีค่าจัดส่งเมื่อสั่งซื้อครบ 500 บาท
-                    </div>
                 </div>
             </div>
         </div>
@@ -255,8 +254,8 @@ $(document).ready(function() {
     // ระบบล้างตะกร้า
     $('#clearCart').click(function() {
         Swal.fire({
-            title: 'ล้างตะกร้าินค้า',
-            text: 'คุณแน่ใจว่า้องการลบสินค้าั้งหมดออกจากตะกร้า?',
+            title: 'ล้างตะกร้าสินค้า',
+            text: 'คุณแน่ใจว่าต้องการลบสินค้าทั้งหมดออกจากตะกร้า?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#198754',
@@ -313,7 +312,7 @@ $(document).ready(function() {
                 if (response.success) {
                     // อัปเดตจำนวนสินค้าในตะกร้า
                     $('.cart-count').text(response.cart_count);
-                    // รีเรชหน้าเพื่อแสดงผลลัพธ์ใหม่
+                    // รีโหลดหน้าเพื่อแสดงผลลัพธ์ใหม่
                     location.reload();
                 } else {
                     Swal.fire({
@@ -337,7 +336,7 @@ $(document).ready(function() {
     function removeCartItem(cartId) {
         Swal.fire({
             title: 'ลบสินค้า',
-            text: 'คุณแน่ใจว่า้องการลบสินค้านี้ออกจากตะกร้า?',
+            text: 'คุณแน่ใจว่าต้องการลบสินค้านี้ออกจากตะกร้า?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#198754',
@@ -355,7 +354,7 @@ $(document).ready(function() {
                         if (response.success) {
                             // อัปเดตจำนวนสินค้าในตะกร้า
                             $('.cart-count').text(response.cart_count);
-                            // ลบแถวสินค้าากตาราง
+                            // ลบแถวสินค้าจากตาราง
                             $(`tr[data-id="${response.product_id}"]`).remove();
                             
                             Swal.fire({
@@ -391,7 +390,10 @@ $(document).ready(function() {
 </script>
 
 <style>
-/* สไตล์เฉพาะสำหรับหน้าะกร้าินค้า */
+.cart-container {
+    min-height: calc(100vh - 150px);
+}
+
 .table th {
     white-space: nowrap;
 }

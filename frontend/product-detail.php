@@ -62,7 +62,7 @@ include '../includes/navbar.php';
                 <div class="card-body p-3">
                     <!-- ภาพหลักสินค้า -->
                     <div class="product-main-image mb-3">
-                        <img src="<?= asset($product['image'] ?? 'assets/images/no-image.jpg') ?>" 
+                        <img src="<?= asset($product['image'] ?? 'assets/images/product1.jpg') ?>" 
                              class="img-fluid rounded-3" 
                              alt="<?= htmlspecialchars($product['name']) ?>"
                              id="mainProductImage">
@@ -72,7 +72,7 @@ include '../includes/navbar.php';
                     <div class="row g-2">
                         <div class="col-3">
                             <div class="ratio ratio-1x1">
-                                <img src="<?= asset($product['image'] ?? 'assets/images/no-image.jpg') ?>" 
+                                <img src="<?= asset($product['image'] ?? 'assets/images/product1.jpg') ?>" 
                                      class="img-fluid rounded-2 cursor-pointer"
                                      onclick="changeMainImage(this)"
                                      style="object-fit: cover;">
@@ -221,7 +221,7 @@ include '../includes/navbar.php';
                             <?php endif; ?>
                             
                             <a href="product-detail.php?id=<?= $related['id'] ?>">
-                                <img src="<?= asset($related['image'] ?? 'assets/images/no-image.jpg') ?>" 
+                                <img src="<?= asset($related['image'] ?? 'assets/images/product1.jpg') ?>" 
                                      class="card-img-top" 
                                      alt="<?= htmlspecialchars($related['name']) ?>">
                             </a>
@@ -345,7 +345,7 @@ function addToCart(productId, quantity, redirectToCheckout, button = null, origi
                         title: redirectToCheckout ? 'เตรียมสั่งซื้อ' : 'เพิ่มสินค้าลงตะกร้าเรียบร้อย'
                     }).then(() => {
                         if (redirectToCheckout) {
-                            window.location.href = '<?= BASE_URL ?>checkout.php';
+                            window.location.href = '<?= BASE_URL ?>frontend/checkout.php';
                         }
                     });
                 } else {
