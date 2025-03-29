@@ -33,8 +33,8 @@
                             <?php echo $_SESSION['user_name']; ?>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>บัญชีของฉัน</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-clipboard-list me-2"></i>คำสั่งซื้อของฉัน</a></li>
+                            <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>frontend/profile.php"><i class="fas fa-user me-2"></i>บัญชีของฉัน</a></li>
+                            <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>frontend/orders.php"><i class="fas fa-clipboard-list me-2"></i>คำสั่งซื้อของฉัน</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ</a></li>
                         </ul>
