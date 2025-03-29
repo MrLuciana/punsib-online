@@ -105,7 +105,11 @@ include '../../includes/admin-navbar.php';
                                             <?= $customer['status'] ? 'เปิดใช้งาน' : 'ปิดใช้งาน' ?>
                                         </span>
                                     </td>
-                                    
+                                    <td>
+                                        <a href="view.php?id=<?= $customer['id'] ?>" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
