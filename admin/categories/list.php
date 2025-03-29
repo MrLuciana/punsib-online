@@ -26,7 +26,7 @@ include '../../includes/admin-navbar.php';
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">จัดการหมวดหมู่</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <a href="manage.php" class="btn btn-success">
+                    <a href="add.php" class="btn btn-success">
                         <i class="fas fa-plus me-2"></i> เพิ่มหมวดหมู่
                     </a>
                 </div>
@@ -59,7 +59,7 @@ include '../../includes/admin-navbar.php';
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="manage.php?id=<?= $category['id'] ?>" class="btn btn-sm btn-primary">
+                                        <a href="edit.php?id=<?= $category['id'] ?>" class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <button class="btn btn-sm btn-danger delete-category" data-id="<?= $category['id'] ?>">
