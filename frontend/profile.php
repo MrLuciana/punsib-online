@@ -41,6 +41,16 @@ include '../includes/navbar.php';
 ?>
 
 <div class="container py-5">
+<?php if (isset($_SESSION['success_message'])): ?>
+    <div class="container mt-3">
+        <div class="alert alert-success alert-dismissible fade show">
+            <?= $_SESSION['success_message'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    <?php unset($_SESSION['success_message']); ?>
+<?php endif; ?>
+
     <div class="row">
         <!-- Sidebar Profile -->
         <div class="col-lg-4 mb-4">
@@ -64,13 +74,14 @@ include '../includes/navbar.php';
                     </p>
 
                     <div class="d-flex justify-content-center gap-2 mb-3">
-                        <button class="btn btn-outline-success btn-sm">
+                        <a href="edit-profile.php" class="btn btn-outline-success btn-sm">
                             <i class="fas fa-edit me-1"></i> แก้ไขโปรไฟล์
-                        </button>
-                        <button class="btn btn-outline-danger btn-sm">
+                        </a>
+                        <a href="change-password.php" class="btn btn-outline-danger btn-sm">
                             <i class="fas fa-lock me-1"></i> เปลี่ยนรหัสผ่าน
-                        </button>
+                        </a>
                     </div>
+
 
                     <hr>
 
