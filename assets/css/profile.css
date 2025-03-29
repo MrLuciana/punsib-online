@@ -1,0 +1,332 @@
+/* เพิ่มในส่วน style ของไฟล์ profile.php หรือในไฟล์ CSS แยก */
+
+/* โทนสี Bronze */
+:root {
+    --bronze-primary: #cd7f32;
+    --bronze-dark: #8a5c2e;
+    --bronze-light: #e6c8a0;
+    --bronze-lighter: #f8f1e8;
+  }
+  
+  /* โครงสร้างหลัก */
+  .profile-container {
+    background-color: #f9f9f9;
+    min-height: 100vh;
+  }
+  
+  /* การ์ดโปรไฟล์ */
+  .profile-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+  
+  .profile-card:hover {
+    box-shadow: 0 6px 16px rgba(205, 127, 50, 0.15);
+  }
+  
+  .profile-header {
+    background-color: var(--bronze-primary);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+    padding: 1.2rem;
+  }
+  
+  /* อวตารผู้ใช้ */
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    background-color: var(--bronze-primary);
+    color: white;
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* เมนูโปรไฟล์ */
+  .profile-menu {
+    border-right: 1px solid #eee;
+  }
+  
+  .profile-menu .nav-link {
+    color: #555;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s;
+    font-weight: 500;
+  }
+  
+  .profile-menu .nav-link:hover {
+    background-color: var(--bronze-lighter);
+    color: var(--bronze-dark);
+  }
+  
+  .profile-menu .nav-link.active {
+    background-color: var(--bronze-primary);
+    color: white;
+  }
+  
+  .profile-menu .nav-link i {
+    width: 20px;
+    text-align: center;
+    margin-right: 8px;
+  }
+  
+  /* ฟอร์มข้อมูล */
+  .profile-form .form-control {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s;
+  }
+  
+  .profile-form .form-control:focus {
+    border-color: var(--bronze-primary);
+    box-shadow: 0 0 0 0.25rem rgba(205, 127, 50, 0.25);
+  }
+  
+  .profile-form label {
+    font-weight: 600;
+    color: var(--bronze-dark);
+    margin-bottom: 0.5rem;
+  }
+  
+  /* ตารางคำสั่งซื้อ */
+  .order-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+  .order-table th {
+    background-color: var(--bronze-lighter);
+    color: var(--bronze-dark);
+    font-weight: 600;
+    padding: 1rem;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .order-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-top: 1px solid #eee;
+  }
+  
+  .order-table tr:hover td {
+    background-color: rgba(205, 127, 50, 0.05);
+  }
+  
+  /* สถานะคำสั่งซื้อ */
+  .order-status {
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  
+  .status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .status-processing {
+    background-color: #cce5ff;
+    color: #004085;
+  }
+  
+  .status-shipped {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-delivered {
+    background-color: #d1ecf1;
+    color: #0c5460;
+  }
+  
+  .status-completed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  /* ปุ่ม */
+  .btn-bronze {
+    background-color: var(--bronze-primary);
+    border-color: var(--bronze-primary);
+    color: white;
+  }
+  
+  .btn-bronze:hover {
+    background-color: var(--bronze-dark);
+    border-color: var(--bronze-dark);
+    color: white;
+  }
+  
+  .btn-outline-bronze {
+    border-color: var(--bronze-primary);
+    color: var(--bronze-primary);
+  }
+  
+  .btn-outline-bronze:hover {
+    background-color: var(--bronze-primary);
+    color: white;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .profile-menu {
+      border-right: none;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      font-size: 2rem;
+    }
+    
+    .order-table {
+      font-size: 0.9rem;
+    }
+    
+    .order-table th, 
+    .order-table td {
+      padding: 0.75rem 0.5rem;
+    }
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .profile-section {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
+  /* การแจ้งเตือน */
+  .alert-profile {
+    background-color: var(--bronze-lighter);
+    border-left: 4px solid var(--bronze-primary);
+    border-radius: 0 4px 4px 0;
+  }
+  
+
+  /* เมนูโปรไฟล์ด้านข้าง */
+.profile-nav .nav-item {
+  margin-bottom: 0.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.profile-nav .nav-link {
+  color: #555;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-nav .nav-link:hover {
+  color: var(--bronze-dark);
+  background-color: rgba(205, 127, 50, 0.1);
+  transform: translateX(5px);
+}
+
+.profile-nav .nav-link.active {
+  color: white;
+  background-color: var(--bronze-primary);
+  box-shadow: 0 4px 8px rgba(205, 127, 50, 0.2);
+}
+
+.profile-nav .nav-link.active:hover {
+  transform: none;
+}
+
+.profile-nav .nav-link i {
+  width: 24px;
+  text-align: center;
+  margin-right: 10px;
+  font-size: 1.1rem;
+}
+
+/* Indicator สำหรับเมนู active */
+.profile-nav .nav-link.active:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--bronze-dark);
+  border-radius: 4px 0 0 4px;
+}
+
+/* การแยกกลุ่มเมนู */
+.profile-nav .nav-divider {
+  border-top: 1px solid #eee;
+  margin: 1rem 0;
+}
+
+/* เมนูออกจากระบบ */
+.profile-nav .nav-item.logout .nav-link {
+  color: #dc3545;
+}
+
+.profile-nav .nav-item.logout .nav-link:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .profile-nav .nav-item {
+    margin-bottom: 0;
+    flex: 1 0 calc(50% - 0.5rem);
+  }
+  
+  .profile-nav .nav-link {
+    padding: 0.5rem;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+  
+  .profile-nav .nav-link i {
+    margin-right: 0;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+  
+  .profile-nav .nav-link span {
+    font-size: 0.8rem;
+  }
+  
+  .profile-nav .nav-divider {
+    display: none;
+  }
+}

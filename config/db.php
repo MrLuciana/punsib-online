@@ -1,12 +1,12 @@
 <?php
 // กำหนดค่าารเชื่อมต่อฐานข้อมูล
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST', 'punsib.mrluciana.com');
+define('DB_USER', 'mrlu_punsib');
+define('DB_PASS', '47Gexr43@');
 define('DB_NAME', 'punsib_online');
 
 // กำหนด URL ของเว็บไซต์
-define('BASE_URL', 'http://localhost/punsib-online/');
+define('BASE_URL', 'https://punsib.mrluciana.com/');
 define('ADMIN_URL', BASE_URL . 'admin/');
 
 // เริ่ม Session

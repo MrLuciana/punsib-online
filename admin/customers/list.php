@@ -109,11 +109,6 @@ include '../../includes/admin-navbar.php';
                                         <a href="view.php?id=<?= $customer['id'] ?>" class="btn btn-sm btn-primary">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <button class="btn btn-sm btn-<?= $customer['status'] ? 'danger' : 'success' ?> toggle-status" 
-                                                data-id="<?= $customer['id'] ?>" 
-                                                data-status="<?= $customer['status'] ?>">
-                                            <i class="fas fa-<?= $customer['status'] ? 'times' : 'check' ?>"></i>
-                                        </button>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>

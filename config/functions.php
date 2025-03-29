@@ -416,3 +416,35 @@ function getClientIp(): string {
     }
     return $_SERVER['REMOTE_ADDR'] ?? 'UNKNOWN';
 }
+
+
+function sanitize_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+function validate_password($password) {
+    // ตรวจสอบความยาวอย่างน้อย 8 ตัวอักษร
+    if (strlen($password) < 8) {
+        return false;
+    }
+    
+    // ตรวจสอบว่ามีตัวเลขอย่างน้อย 1 ตัว
+    if (!preg_match('/[0-9]/', $password)) {
+        return false;
+    }
+    
+    // ตรวจสอบว่ามีตัวอักษรพิมพ์ใหญ่อย่างน้อย 1 ตัว
+    if (!preg_match('/[A-Z]/', $password)) {
+        return false;
+    }
+    
+    // ตรวจสอบว่ามีตัวอักษรพิมพ์เล็กอย่างน้อย 1 ตัว
+    if (!preg_match('/[a-z]/', $password)) {
+        return false;
+    }
+    
+    return true;
+}

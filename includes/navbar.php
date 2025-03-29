@@ -26,7 +26,7 @@
                         <span class="badge bg-gold cart-count">0</span>
                     </a>
                 </li>
-                <?php if(isset($_SESSION['user_id'])): ?>
+                <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user-circle me-1"></i>
@@ -34,8 +34,17 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>frontend/profile.php"><i class="fas fa-user me-2"></i>บัญชีของฉัน</a></li>
+                            <?php if ($user['role'] == 'admin'): ?>
+                                <li>
+                                    <a href="<?= BASE_URL ?>admin/dashboard.php" class="dropdown-item text-danger">
+                                        <i class="fas fa-cog me-2"></i>แผงควบคุม
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                             <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>frontend/orders.php"><i class="fas fa-clipboard-list me-2"></i>คำสั่งซื้อของฉัน</a></li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li><a class="dropdown-item" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ</a></li>
                         </ul>
                     </li>

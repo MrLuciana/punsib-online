@@ -23,22 +23,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
             </a>
         </div>
         <!-- Brand Logo -->
-        <a class="navbar-brand d-flex align-items-center mx-2" href="dashboard.php">
+        <a class="navbar-brand d-flex align-items-center mx-2" href="<?= BASE_URL ?>admin/dashboard.php">
             <!-- <img src="<?= BASE_URL ?>assets/images/logo-white.png" height="32" alt="Admin Logo" class="mr-2"> -->
             <span class="font-weight-bold">ระบบหลังบ้าน</span>
         </a>
-        <!-- Search Form -->
-        <!-- <form class="d-none d-md-inline-block form-inline mx-3" style="width: 300px;">
-      <div class="input-group input-group-sm rounded-pill">
-        <input type="text" class="form-control border-0 bg-white" placeholder="ค้นหา..." aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-light rounded-pill" type="button">
-            <i class="fas fa-search text-primary"></i>
-          </button>
-        </div>
-      </div>
-    </form> -->
-
         <!-- Right Navigation Items -->
         <ul class="navbar-nav ml-auto">
             <!-- Notifications Dropdown -->
@@ -109,21 +97,21 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
                     <img class="img-profile rounded-circle border border-white" src="<?= BASE_URL ?>assets/images/admin-avatar.jpg" width="40" height="40">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in border-0" aria-labelledby="userDropdown">
-                    <a class="dropdown-item d-flex align-items-center py-2" href="profile.php">
+                    <a class="dropdown-item d-flex align-items-center py-2" href="<?= BASE_URL ?>frontend/profile.php">
                         <i class="fas fa-user fa-fw me-2 text-primary"></i>
                         โปรไฟล์
                     </a>
-                    <a class="dropdown-item d-flex align-items-center py-2" href="settings.php">
+                    <!-- <a class="dropdown-item d-flex align-items-center py-2" href="settings.php">
                         <i class="fas fa-cogs fa-fw me-2 text-primary"></i>
                         ตั้งค่าระบบ
-                    </a>
+                    </a> -->
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item d-flex align-items-center py-2" href="<?= BASE_URL ?>" target="_blank">
                         <i class="fas fa-store fa-fw me-2 text-primary"></i>
                         ไปที่หน้าร้าน
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item d-flex align-items-center py-2" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <a class="dropdown-item d-flex align-items-center py-2" href="<?= BASE_URL ?>logout.php" data-toggle="modal" data-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-fw me-2 text-primary"></i>
                         ออกจากระบบ
                     </a>
