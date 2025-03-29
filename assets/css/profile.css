@@ -330,8 +330,3 @@
     display: none;
   }
 }
-
-/* กำหนดให้ไอคอนเป็นสีดำ */
-.profile-menu .nav-link i {
-  color: #000 !important; /* สีดำ */
-}
