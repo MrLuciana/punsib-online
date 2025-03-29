@@ -100,17 +100,17 @@ include '../includes/navbar.php';
                     <a href="orders.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-shopping-bag me-2"></i>คำสั่งซื้อของฉัน
                     </a>
-                    <a href="wishlist.php" class="list-group-item list-group-item-action">
+                    <!-- <a href="wishlist.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-heart me-2"></i>รายการโปรด
-                    </a>
-                    <a href="addresses.php" class="list-group-item list-group-item-action">
+                    </a> -->
+                    <!-- <a href="addresses.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-map-marker-alt me-2"></i>ที่อยู่จัดส่ง
-                    </a>
+                    </a> -->
                     <a href="change-password.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-lock me-2"></i>เปลี่ยนรหัสผ่าน
                     </a>
                     <?php if($user['role'] == 'admin'): ?>
-                    <a href="../admin/" class="list-group-item list-group-item-action text-danger">
+                    <a href="<?= BASE_URL ?>admin/" class="list-group-item list-group-item-action text-danger">
                         <i class="fas fa-cog me-2"></i>แผงควบคุม
                     </a>
                     <?php endif; ?>
@@ -201,9 +201,9 @@ include '../includes/navbar.php';
                 <div class="card-header bg-success text-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>ที่อยู่จัดส่ง</h5>
-                        <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addressModal">
+                        <!-- <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addressModal">
                             <i class="fas fa-plus me-1"></i>เพิ่มที่อยู่
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <div class="card-body">
@@ -233,7 +233,7 @@ include '../includes/navbar.php';
             </div>
             
             <!-- Wishlist Section -->
-            <div class="card shadow-sm">
+            <!-- <div class="card shadow-sm">
                 <div class="card-header bg-success text-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="fas fa-heart me-2"></i>รายการโปรด</h5>
@@ -250,7 +250,7 @@ include '../includes/navbar.php';
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
