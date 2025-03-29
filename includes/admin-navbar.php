@@ -97,7 +97,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
                     <img class="img-profile rounded-circle border border-white" src="<?= BASE_URL ?>assets/images/admin-avatar.jpg" width="40" height="40">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in border-0" aria-labelledby="userDropdown">
-                    <a class="dropdown-item d-flex align-items-center py-2" href="profile.php">
+                    <a class="dropdown-item d-flex align-items-center py-2" href="<?= BASE_URL ?>frontend/profile.php">
                         <i class="fas fa-user fa-fw me-2 text-primary"></i>
                         โปรไฟล์
                     </a>
