@@ -186,9 +186,9 @@ include '../includes/navbar.php';
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="payment_method" id="cod" value="cash" disabled>
+                            <input class="form-check-input" type="radio" name="payment_method" id="cod" value="cash">
                             <label class="form-check-label" for="cod">
-                                <i class="fas fa-money-bill-alt me-2"></i>ชำระเงินปลายทาง (ไม่รองรับ)
+                                <i class="fas fa-money-bill-alt me-2"></i>ชำระเงินปลายทาง
                             </label>
                         </div>
                     </div>

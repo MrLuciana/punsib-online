@@ -29,14 +29,14 @@ function getOrderStatusColor($status) {
 }
 
 // ฟังก์ชันตรวจสอบสถานะการชำระเงิน
-function getPaymentStatusText($status) {
-    $statuses = [
-        'pending' => 'รอชำระเงิน',
-        'paid' => 'ชำระเงินแล้ว',
-        'failed' => 'ชำระเงินล้มเหลว'
-    ];
-    return $statuses[$status] ?? $status;
-}
+// function getPaymentStatusText($status) {
+//     $statuses = [
+//         'pending' => 'รอชำระเงิน',
+//         'paid' => 'ชำระเงินแล้ว',
+//         'failed' => 'ชำระเงินล้มเหลว'
+//     ];
+//     return $statuses[$status] ?? $status;
+// }
 
 function getPaymentStatusColor($status) {
     $colors = [
