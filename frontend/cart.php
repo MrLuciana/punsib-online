@@ -8,7 +8,7 @@ $pageTitle = "ตะกร้าสินค้า - ร้านขนมปั
 if (!isLoggedIn()) {
     $_SESSION['redirect_url'] = BASE_URL . 'cart.php';
     setAlert('warning', 'กรุณาเข้าสู่ระบบเพื่อดูตะกร้าสินค้า');
-    redirect('login.php');
+    redirect(BASE_URL .'login.php');
 }
 
 // ดึงข้อมูลสินค้าในตะกร้า
