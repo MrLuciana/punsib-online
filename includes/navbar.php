@@ -35,9 +35,11 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>frontend/profile.php"><i class="fas fa-user me-2"></i>บัญชีของฉัน</a></li>
                             <?php if ($user['role'] == 'admin'): ?>
-                                <a href="<?= BASE_URL ?>admin/dashboard.php" class="dropdown-item text-danger">
-                                    <i class="fas fa-cog me-2"></i>แผงควบคุม
-                                </a>
+                                <li>
+                                    <a href="<?= BASE_URL ?>admin/dashboard.php" class="dropdown-item text-danger">
+                                        <i class="fas fa-cog me-2"></i>แผงควบคุม
+                                    </a>
+                                </li>
                             <?php endif; ?>
                             <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>frontend/orders.php"><i class="fas fa-clipboard-list me-2"></i>คำสั่งซื้อของฉัน</a></li>
                             <li>
