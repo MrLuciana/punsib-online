@@ -52,7 +52,6 @@
   /* เมนูโปรไฟล์ */
   .profile-menu {
     border-right: 1px solid #eee;
-    color: #555;
   }
   
   .profile-menu .nav-link {
@@ -330,4 +329,9 @@
   .profile-nav .nav-divider {
     display: none;
   }
+}
+
+/* กำหนดให้ไอคอนเป็นสีดำ */
+.profile-menu .nav-link i {
+  color: #000 !important; /* สีดำ */
 }
