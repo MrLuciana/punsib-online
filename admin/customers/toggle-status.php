@@ -1,7 +1,7 @@
 <?php
-require_once '../../../config/db.php';
-require_once '../../../config/functions.php';
-require_once '../../config/admin_functions.php';
+require_once BASE_URL . 'config/db.php';
+require_once BASE_URL . 'config/functions.php';
+require_once BASE_URL . 'config/admin_functions.php';
 
 header('Content-Type: application/json');
 
