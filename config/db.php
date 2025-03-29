@@ -1,6 +1,6 @@
 <?php
 // กำหนดค่าารเชื่อมต่อฐานข้อมูล
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'punsib.mrluciana.com');
 define('DB_USER', 'mrlu_punsib');
 define('DB_PASS', '47Gexr43@');
 define('DB_NAME', 'punsib_online');
