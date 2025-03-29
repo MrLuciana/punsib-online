@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/product-detail.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/auth.css">
 
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/profile.css">
+
+
 </head>
 
 <body>
