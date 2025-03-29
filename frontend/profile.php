@@ -47,7 +47,7 @@ include '../includes/navbar.php';
             <div class="card shadow-sm">
                 <div class="card-body text-center">
                     <div class="position-relative d-inline-block mb-3">
-                        <img src="<?= BASE_URL ?>assets/images/profile-placeholder.png"
+                        <img src="<?= BASE_URL ?>assets/images/profile-placeholder.jpg"
                             class="rounded-circle shadow"
                             width="150"
                             height="150"
