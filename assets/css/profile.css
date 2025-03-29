@@ -52,6 +52,7 @@
   /* เมนูโปรไฟล์ */
   .profile-menu {
     border-right: 1px solid #eee;
+    color: #555;
   }
   
   .profile-menu .nav-link {
