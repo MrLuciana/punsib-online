@@ -93,7 +93,7 @@ include '../includes/navbar.php';
             </h2>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>">หน้าลัก</a></li>
+                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>">หน้าหลัก</a></li>
                     <li class="breadcrumb-item"><a href="orders.php">รายการสั่งซื้อ</a></li>
                     <li class="breadcrumb-item active" aria-current="page">รายละเอียดการสั่งซื้อ</li>
                 </ol>
@@ -117,7 +117,7 @@ include '../includes/navbar.php';
                                     <th width="60">รูปภาพ</th>
                                     <th>สินค้า</th>
                                     <th width="100" class="text-center">จำนวน</th>
-                                    <th width="120" class="text-end">ราาต่อชิ้น</th>
+                                    <th width="120" class="text-end">ราคาต่อชิ้น</th>
                                     <th width="120" class="text-end">รวม</th>
                                 </tr>
                             </thead>
@@ -156,7 +156,7 @@ include '../includes/navbar.php';
                                     <td class="text-end fw-bold"><?= number_format(array_sum(array_column($orderItems, 'total_price')), 2) ?> บาท</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="text-end">ค่าัดส่ง</td>
+                                    <td colspan="4" class="text-end">ค่าจัดส่ง</td>
                                     <td class="text-end fw-bold">0.00 บาท</td>
                                 </tr>
                                 <tr>
@@ -291,12 +291,12 @@ include '../includes/navbar.php';
                     
                     <div class="mb-3">
                         <h6>อีเมล</h6>
-                        <p><?= htmlspecialchars($order['email']) ?></p>
+                        <p><?= htmlspecialchars($order['email'] ?? '-') ?></p>
                     </div>
                     
                     <div class="mb-3">
                         <h6>เบอร์โทรศัพท์</h6>
-                        <p><?= htmlspecialchars($order['phone']) ?></p>
+                        <p><?= htmlspecialchars($order['phone'] ?? '-') ?></p>
                     </div>
                 </div>
             </div>
@@ -310,7 +310,7 @@ include '../includes/navbar.php';
                 <div class="card-body">
                     <div class="mb-3">
                         <h6>ที่อยู่จัดส่ง</h6>
-                        <p><?= nl2br(htmlspecialchars($order['shipping_address'])) ?></p>
+                        <p><?= nl2br(htmlspecialchars($order['shipping_address'] ?? '-')) ?></p>
                     </div>
                     
                     <?php if ($order['billing_address']): ?>

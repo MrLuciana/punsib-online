@@ -4,86 +4,124 @@ require_once '../../config/functions.php';
 require_once '../config/admin_functions.php';
 
 if (!isAdmin()) {
-    setAlert('danger', 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
+    setAlert('danger', 'คุณไม่มีสิทธิ์เข้าึงหน้านี้');
     redirect(BASE_URL);
 }
 
-$pageTitle = "รายงานยอดขาย";
+$pageTitle = "รายงานรายได้";
 
-// กำหนดค่าเริ่มต้นสำหรับการกรอง
-$startDate = $_GET['start_date'] ?? date('Y-m-01');
-$endDate = $_GET['end_date'] ?? date('Y-m-d');
-$groupBy = $_GET['group_by'] ?? 'day'; // day, month, year
-$paymentMethod = $_GET['payment_method'] ?? 'all'; // all, cash, credit_card, bank_transfer, qr_code
-$source = $_GET['source'] ?? 'all'; // all, online, walk_in, delivery
+// ตัวกรองข้อมูล
+$date_from = $_GET['date_from'] ?? date('Y-m-01');
+$date_to = $_GET['date_to'] ?? date('Y-m-d');
+$group_by = $_GET['group_by'] ?? 'day';
+$payment_method = $_GET['payment_method'] ?? '';
+$source = $_GET['source'] ?? '';
 
-// สร้างเงื่อนไขสำหรับ Query
-$where = "WHERE date BETWEEN ? AND ?";
-$params = [$startDate, $endDate];
+// สร้างคำสั่ง SQL
+$sql = "SELECT 
+            DATE(date) as report_date,
+            SUM(amount) as total_amount,
+            SUM(discount_amount) as total_discount,
+            SUM(shipping_fee) as total_shipping,
+            SUM(tax_amount) as total_tax,
+            SUM(net_amount) as total_net,
+            COUNT(id) as transaction_count
+        FROM revenue 
+        WHERE date BETWEEN ? AND ?";
 
-if ($paymentMethod !== 'all') {
-    $where .= " AND payment_method = ?";
-    $params[] = $paymentMethod;
+$params = [$date_from, $date_to];
+
+if (!empty($payment_method)) {
+    $sql .= " AND payment_method = ?";
+    $params[] = $payment_method;
 }
 
-if ($source !== 'all') {
-    $where .= " AND source = ?";
+if (!empty($source)) {
+    $sql .= " AND source = ?";
     $params[] = $source;
 }
 
-// กำหนดรูปแบบวันที่สำหรับการ GROUP BY
-$dateFormat = '';
-$groupByText = '';
-switch ($groupBy) {
+// กลุ่มข้อมูลตามที่เลือก
+switch ($group_by) {
     case 'month':
-        $dateFormat = "%Y-%m";
-        $groupByText = 'เดือน';
+        $sql .= " GROUP BY YEAR(date), MONTH(date)";
+        $sql .= " ORDER BY YEAR(date), MONTH(date)";
         break;
     case 'year':
-        $dateFormat = "%Y";
-        $groupByText = 'ปี';
+        $sql .= " GROUP BY YEAR(date)";
+        $sql .= " ORDER BY YEAR(date)";
         break;
-    default:
-        $dateFormat = "%Y-%m-%d";
-        $groupByText = 'วัน';
+    case 'product':
+        $sql = "SELECT 
+                    p.name as product_name,
+                    SUM(r.amount) as total_amount,
+                    SUM(r.discount_amount) as total_discount,
+                    SUM(r.net_amount) as total_net,
+                    COUNT(r.id) as transaction_count
+                FROM revenue r
+                JOIN products p ON r.product_id = p.id
+                WHERE r.date BETWEEN ? AND ?";
+
+        if (!empty($payment_method)) {
+            $sql .= " AND r.payment_method = ?";
+        }
+
+        if (!empty($source)) {
+            $sql .= " AND r.source = ?";
+        }
+
+        $sql .= " GROUP BY r.product_id";
+        $sql .= " ORDER BY total_net DESC";
         break;
+    case 'category':
+        $sql = "SELECT 
+                    c.name as category_name,
+                    SUM(r.amount) as total_amount,
+                    SUM(r.discount_amount) as total_discount,
+                    SUM(r.net_amount) as total_net,
+                    COUNT(r.id) as transaction_count
+                FROM revenue r
+                JOIN categories c ON r.category_id = c.id
+                WHERE r.date BETWEEN ? AND ?";
+
+        if (!empty($payment_method)) {
+            $sql .= " AND r.payment_method = ?";
+        }
+
+        if (!empty($source)) {
+            $sql .= " AND r.source = ?";
+        }
+
+        $sql .= " GROUP BY r.category_id";
+        $sql .= " ORDER BY total_net DESC";
+        break;
+    default: // day
+        $sql .= " GROUP BY DATE(date)";
+        $sql .= " ORDER BY date";
 }
 
 // ดึงข้อมูลรายงาน
-$stmt = $conn->prepare("
-    SELECT 
-        DATE_FORMAT(date, ?) as period,
-        SUM(amount) as total_revenue,
-        SUM(discount_amount) as total_discount,
-        SUM(shipping_fee) as total_shipping,
-        SUM(tax_amount) as total_tax,
-        SUM(net_amount) as net_revenue,
-        COUNT(id) as transaction_count
-    FROM revenue
-    $where
-    GROUP BY period
-    ORDER BY period
-");
-$stmt->execute(array_merge([$dateFormat], $params));
-$revenueReport = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $conn->prepare($sql);
+$stmt->execute($params);
+$reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // คำนวณยอดรวมทั้งหมด
-$totalSummary = [
-    'revenue' => 0,
+$total_summary = [
+    'amount' => 0,
     'discount' => 0,
     'shipping' => 0,
     'tax' => 0,
     'net' => 0,
-    'transactions' => 0
+    'count' => 0
 ];
 
-foreach ($revenueReport as $row) {
-    $totalSummary['revenue'] += $row['total_revenue'];
-    $totalSummary['discount'] += $row['total_discount'];
-    $totalSummary['shipping'] += $row['total_shipping'];
-    $totalSummary['tax'] += $row['total_tax'];
-    $totalSummary['net'] += $row['net_revenue'];
-    $totalSummary['transactions'] += $row['transaction_count'];
+foreach ($reports as $report) {
+    $total_summary['amount'] += $report['total_amount'] ?? 0;
+    $total_summary['discount'] += $report['total_discount'] ?? 0;
+    $total_summary['shipping'] += $report['total_shipping'] ?? 0;
+    $total_summary['tax'] += $report['total_tax'] ?? 0;
+    $total_summary['net'] += $report['total_net'] ?? 0;
+    $total_summary['count'] += $report['transaction_count'] ?? 0;
 }
 
 include '../../includes/admin-head.php';
@@ -93,65 +131,69 @@ include '../../includes/admin-navbar.php';
 <div class="container-fluid">
     <div class="row">
         <?php include '../../includes/admin-sidebar.php'; ?>
-        
+
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">รายงานยอดขาย</h1>
+                <h1 class="h2">รายงานรายได้</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <button class="btn btn-outline-secondary me-2" onclick="window.print()">
-                        <i class="fas fa-print me-2"></i>พิมพ์รายงาน
-                    </button>
-                    <button class="btn btn-outline-success" id="exportReport">
-                        <i class="fas fa-file-excel me-2"></i>Export Excel
-                    </button>
+                    <div class="btn-group me-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="exportBtn">
+                            <i class="fas fa-file-export me-1"></i> Export
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <!-- ฟอร์มกรองข้อมูล -->
             <div class="card mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-filter me-2"></i>กรองข้อมูล</h5>
+                </div>
                 <div class="card-body">
                     <form method="get" class="row g-3">
                         <div class="col-md-3">
-                            <label for="start_date" class="form-label">วันที่เริ่มต้น</label>
-                            <input type="date" class="form-control" id="start_date" name="start_date" value="<?= $startDate ?>">
+                            <label for="date_from" class="form-label">จากวันที่</label>
+                            <input type="date" class="form-control" id="date_from" name="date_from" value="<?= $date_from ?>">
                         </div>
                         <div class="col-md-3">
-                            <label for="end_date" class="form-label">วันที่สิ้นสุด</label>
-                            <input type="date" class="form-control" id="end_date" name="end_date" value="<?= $endDate ?>">
+                            <label for="date_to" class="form-label">ถึงวันที่</label>
+                            <input type="date" class="form-control" id="date_to" name="date_to" value="<?= $date_to ?>">
                         </div>
-                        <div class="col-md-2">
-                            <label for="group_by" class="form-label">จัดกลุ่มตาม</label>
+                        <div class="col-md-3">
+                            <label for="group_by" class="form-label">กลุ่มข้อมูลตาม</label>
                             <select class="form-select" id="group_by" name="group_by">
-                                <option value="day" <?= $groupBy === 'day' ? 'selected' : '' ?>>รายวัน</option>
-                                <option value="month" <?= $groupBy === 'month' ? 'selected' : '' ?>>รายเดือน</option>
-                                <option value="year" <?= $groupBy === 'year' ? 'selected' : '' ?>>รายปี</option>
+                                <option value="day" <?= $group_by == 'day' ? 'selected' : '' ?>>รายวัน</option>
+                                <option value="month" <?= $group_by == 'month' ? 'selected' : '' ?>>รายเดือน</option>
+                                <option value="year" <?= $group_by == 'year' ? 'selected' : '' ?>>รายปี</option>
+                                <option value="product" <?= $group_by == 'product' ? 'selected' : '' ?>>สินค้า</option>
+                                <option value="category" <?= $group_by == 'category' ? 'selected' : '' ?>>หมวดหมู่</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <label for="payment_method" class="form-label">ช่องทางการชำระเงิน</label>
+                        <div class="col-md-3">
+                            <label for="payment_method" class="form-label">วิธีการชำระเงิน</label>
                             <select class="form-select" id="payment_method" name="payment_method">
-                                <option value="all" <?= $paymentMethod === 'all' ? 'selected' : '' ?>>ทั้งหมด</option>
-                                <option value="cash" <?= $paymentMethod === 'cash' ? 'selected' : '' ?>>เงินสด</option>
-                                <option value="credit_card" <?= $paymentMethod === 'credit_card' ? 'selected' : '' ?>>บัตรเครดิต</option>
-                                <option value="bank_transfer" <?= $paymentMethod === 'bank_transfer' ? 'selected' : '' ?>>โอนเงิน</option>
-                                <option value="qr_code" <?= $paymentMethod === 'qr_code' ? 'selected' : '' ?>>QR Code</option>
+                                <option value="">ทั้งหมด</option>
+                                <option value="cash" <?= $payment_method == 'cash' ? 'selected' : '' ?>>เงินสด</option>
+                                <option value="credit_card" <?= $payment_method == 'credit_card' ? 'selected' : '' ?>>บัตรเครดิต</option>
+                                <option value="bank_transfer" <?= $payment_method == 'bank_transfer' ? 'selected' : '' ?>>โอนเงิน</option>
+                                <option value="qr_code" <?= $payment_method == 'qr_code' ? 'selected' : '' ?>>QR Code</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <label for="source" class="form-label">ช่องทางการขาย</label>
+                        <div class="col-md-3">
+                            <label for="source" class="form-label">ช่องทางขาย</label>
                             <select class="form-select" id="source" name="source">
-                                <option value="all" <?= $source === 'all' ? 'selected' : '' ?>>ทั้งหมด</option>
-                                <option value="online" <?= $source === 'online' ? 'selected' : '' ?>>ออนไลน์</option>
-                                <option value="walk_in" <?= $source === 'walk_in' ? 'selected' : '' ?>>หน้าร้าน</option>
-                                <option value="delivery" <?= $source === 'delivery' ? 'selected' : '' ?>>จัดส่ง</option>
+                                <option value="">ทั้งหมด</option>
+                                <option value="online" <?= $source == 'online' ? 'selected' : '' ?>>ออนไลน์</option>
+                                <option value="walk_in" <?= $source == 'walk_in' ? 'selected' : '' ?>>หน้าร้าน</option>
+                                <option value="delivery" <?= $source == 'delivery' ? 'selected' : '' ?>>จัดส่ง</option>
                             </select>
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-filter me-2"></i>กรองข้อมูล
+                            <button type="submit" class="btn btn-primary me-2">
+                                <i class="fas fa-search me-1"></i> ค้นหา
                             </button>
-                            <a href="report.php" class="btn btn-outline-secondary ms-2">
-                                <i class="fas fa-sync-alt me-2"></i>รีเซ็ต
+                            <a href="report.php" class="btn btn-outline-secondary">
+                                <i class="fas fa-sync-alt me-1"></i> ล้างค่า
                             </a>
                         </div>
                     </form>
@@ -160,112 +202,97 @@ include '../../includes/admin-navbar.php';
 
             <!-- สรุปยอดรวม -->
             <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="card text-white bg-primary">
+                <div class="col-12">
+                    <div class="card">
                         <div class="card-body">
-                            <h6 class="card-title">รายได้รวม</h6>
-                            <h3 class="mb-0"><?= number_format($totalSummary['revenue'], 2) ?> บาท</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="card text-white bg-info">
-                        <div class="card-body">
-                            <h6 class="card-title">ส่วนลด</h6>
-                            <h3 class="mb-0"><?= number_format($totalSummary['discount'], 2) ?> บาท</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="card text-white bg-secondary">
-                        <div class="card-body">
-                            <h6 class="card-title">ค่าจัดส่ง</h6>
-                            <h3 class="mb-0"><?= number_format($totalSummary['shipping'], 2) ?> บาท</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="card text-white bg-warning">
-                        <div class="card-body">
-                            <h6 class="card-title">ภาษี</h6>
-                            <h3 class="mb-0"><?= number_format($totalSummary['tax'], 2) ?> บาท</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-white bg-success">
-                        <div class="card-body">
-                            <h6 class="card-title">รวมสุทธิ</h6>
-                            <h3 class="mb-0"><?= number_format($totalSummary['net'], 2) ?> บาท</h3>
-                            <small class="float-end"><?= number_format($totalSummary['transactions']) ?> ธุรกรรม</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- กราฟและตารางรายงาน -->
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="card mb-4">
-                        <div class="card-header bg-white">
-                            <h5 class="mb-0">กราฟแสดงรายได้ตาม<?= $groupByText ?></h5>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="revenueChart" height="300"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-header bg-white">
-                            <h5 class="mb-0">สรุปตามช่องทางการขาย</h5>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="salesSourceChart" height="300"></canvas>
+                            <h5 class="card-title">สรุปยอดรวม</h5>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card bg-light">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-subtitle mb-2 text-muted">จำนวนรายการ</h6>
+                                            <h4 class="card-title"><?= number_format($total_summary['count']) ?></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-light">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-subtitle mb-2 text-muted">ยอดขายรวม</h6>
+                                            <h4 class="card-title"><?= number_format($total_summary['amount'], 2) ?> บาท</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-light">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-subtitle mb-2 text-muted">ส่วนลดรวม</h6>
+                                            <h4 class="card-title"><?= number_format($total_summary['discount'], 2) ?> บาท</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-light">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-subtitle mb-2 text-muted">ยอดสุทธิ</h6>
+                                            <h4 class="card-title"><?= number_format($total_summary['net'], 2) ?> บาท</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- ตารางแสดงผล -->
             <div class="card">
-                <div class="card-header bg-white">
-                    <h5 class="mb-0">ตารางรายงานยอดขาย</h5>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover" id="reportTable">
-                            <thead>
+                        <table class="table table-striped table-hover" id="revenueTable">
+                            <thead class="table-light">
                                 <tr>
-                                    <th><?= $groupByText ?></th>
-                                    <th class="text-end">รายได้</th>
-                                    <th class="text-end">ส่วนลด</th>
-                                    <th class="text-end">ค่าจัดส่ง</th>
-                                    <th class="text-end">ภาษี</th>
-                                    <th class="text-end">รวมสุทธิ</th>
-                                    <th class="text-end">จำนวนธุรกรรม</th>
+                                    <?php if ($group_by == 'day'): ?>
+                                        <th width="120">วันที่</th>
+                                    <?php elseif ($group_by == 'month'): ?>
+                                        <th width="120">เดือน</th>
+                                    <?php elseif ($group_by == 'year'): ?>
+                                        <th width="120">ปี</th>
+                                    <?php elseif ($group_by == 'product'): ?>
+                                        <th>สินค้า</th>
+                                    <?php elseif ($group_by == 'category'): ?>
+                                        <th>หมวดหมู่</th>
+                                    <?php endif; ?>
+                                    <th width="120" class="text-end">ยอดขาย</th>
+                                    <th width="120" class="text-end">ส่วนลด</th>
+                                    <th width="120" class="text-end">ค่าส่ง</th>
+                                    <th width="120" class="text-end">ภาษี</th>
+                                    <th width="120" class="text-end">ยอดสุทธิ</th>
+                                    <th width="100" class="text-end">จำนวน</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($revenueReport as $row): ?>
-                                <tr>
-                                    <td><?= $row['period'] ?></td>
-                                    <td class="text-end"><?= number_format($row['total_revenue'], 2) ?></td>
-                                    <td class="text-end"><?= number_format($row['total_discount'], 2) ?></td>
-                                    <td class="text-end"><?= number_format($row['total_shipping'], 2) ?></td>
-                                    <td class="text-end"><?= number_format($row['total_tax'], 2) ?></td>
-                                    <td class="text-end fw-bold"><?= number_format($row['net_revenue'], 2) ?></td>
-                                    <td class="text-end"><?= $row['transaction_count'] ?></td>
-                                </tr>
+                                <?php foreach ($reports as $report):?>
+                                    <tr>
+                                        <?php if ($group_by == 'day'): ?>
+                                            <td><?= thaiDate($report['report_date']) ?></td>
+                                        <?php elseif ($group_by == 'month'): ?>
+                                            <td><?= date('F Y', strtotime($report['report_date'])) ?></td>
+                                        <?php elseif ($group_by == 'year'): ?>
+                                            <td><?= date('Y', strtotime($report['report_date'])) ?></td>
+                                        <?php elseif ($group_by == 'product'): ?>
+                                            <td><?= htmlspecialchars($report['product_name']) ?></td>
+                                        <?php elseif ($group_by == 'category'): ?>
+                                            <td><?= htmlspecialchars($report['category_name']) ?></td>
+                                        <?php endif; ?>
+                                        <td class="text-end"><?= number_format($report['total_amount'] ?? 0, 2) ?></td>
+                                        <td class="text-end"><?= number_format($report['total_discount'] ?? 0, 2) ?></td>
+                                        <td class="text-end"><?= number_format($report['total_shipping'] ?? 0, 2) ?></td>
+                                        <td class="text-end"><?= number_format($report['total_tax'] ?? 0, 2) ?></td>
+                                        <td class="text-end"><?= number_format($report['total_net'] ?? 0, 2) ?></td>
+                                        <td class="text-end"><?= number_format($report['transaction_count'] ?? 0) ?></td>
+                                    </tr>
                                 <?php endforeach; ?>
-                                <tr class="table-active">
-                                    <td class="fw-bold">รวมทั้งหมด</td>
-                                    <td class="text-end fw-bold"><?= number_format($totalSummary['revenue'], 2) ?></td>
-                                    <td class="text-end fw-bold"><?= number_format($totalSummary['discount'], 2) ?></td>
-                                    <td class="text-end fw-bold"><?= number_format($totalSummary['shipping'], 2) ?></td>
-                                    <td class="text-end fw-bold"><?= number_format($totalSummary['tax'], 2) ?></td>
-                                    <td class="text-end fw-bold"><?= number_format($totalSummary['net'], 2) ?></td>
-                                    <td class="text-end fw-bold"><?= number_format($totalSummary['transactions']) ?></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -275,149 +302,34 @@ include '../../includes/admin-navbar.php';
     </div>
 </div>
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-$(document).ready(function() {
-    // ข้อมูลสำหรับกราฟ
-    const reportData = <?= json_encode($revenueReport) ?>;
-    const labels = reportData.map(item => item.period);
-    const revenueData = reportData.map(item => parseFloat(item.net_revenue));
-    
-    // กราฟรายได้
-    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-    const revenueChart = new Chart(revenueCtx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'รายได้สุทธิ (บาท)',
-                data: revenueData,
-                backgroundColor: 'rgba(25, 135, 84, 0.7)',
-                borderColor: 'rgba(25, 135, 84, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
+    $(document).ready(function() {
+        // ระบบ DataTable
+        $('#revenueTable').DataTable({
             responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return value.toLocaleString() + ' บาท';
-                        }
-                    }
-                }
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Thai.json'
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.raw.toLocaleString() + ' บาท';
-                        }
-                    }
-                }
+            order: [],
+            pageLength: 25,
+            initComplete: function() {
+                // ซ่อนปุ่ม Export เดิม
+                $('#exportBtn').hide();
             }
-        }
-    });
-
-    // ดึงข้อมูลสรุปช่องทางการขาย
-    $.ajax({
-        url: 'get-sales-source-data.php',
-        method: 'GET',
-        data: {
-            start_date: '<?= $startDate ?>',
-            end_date: '<?= $endDate ?>'
-        },
-        dataType: 'json',
-        success: function(data) {
-            const sourceCtx = document.getElementById('salesSourceChart').getContext('2d');
-            const sourceChart = new Chart(sourceCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        data: data.values,
-                        backgroundColor: [
-                            'rgba(54, 162, 235, 0.7)',
-                            'rgba(255, 99, 132, 0.7)',
-                            'rgba(255, 206, 86, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(255, 206, 86, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total) * 100);
-                                    return `${label}: ${value.toLocaleString()} บาท (${percentage}%)`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    });
-
-    // ระบบ Export Excel
-    $('#exportReport').click(function() {
-        // สร้างข้อมูล CSV
-        let csv = '<?= $groupByText ?>,รายได้,ส่วนลด,ค่าจัดส่ง,ภาษี,รวมสุทธิ,จำนวนธุรกรรม\n';
-        
-        reportData.forEach(row => {
-            csv += `"${row.period}",${row.total_revenue},${row.total_discount},${row.total_shipping},${row.total_tax},${row.net_revenue},${row.transaction_count}\n`;
         });
-        
-        csv += `"รวมทั้งหมด",${totalSummary['revenue']},${totalSummary['discount']},${totalSummary['shipping']},${totalSummary['tax']},${totalSummary['net']},${totalSummary['transactions']}\n`;
-        
-        // สร้างไฟล์และดาวน์โหลด
-        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `รายงานยอดขาย_${startDate}_ถึง_${endDate}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
     });
-});
 </script>
 
-<style>
-@media print {
-    body * {
-        visibility: hidden;
-    }
-    .container-fluid, .container-fluid * {
-        visibility: visible;
-    }
-    .container-fluid {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-    .sidebar, .btn-toolbar {
-        display: none !important;
-    }
-}
-</style>
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 
 <?php
 include '../../includes/footer.php';

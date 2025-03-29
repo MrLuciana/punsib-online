@@ -150,11 +150,11 @@ include '../includes/navbar.php';
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
-                            <input type="tel" class="form-control" id="phone" value="<?= htmlspecialchars($user['phone']) ?>" required>
+                            <input type="tel" class="form-control" id="phone" value="<?= htmlspecialchars($user['phone'] ?? '') ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="shipping_address" class="form-label">ที่อยู่จัดส่ง</label>
-                            <textarea class="form-control" id="shipping_address" name="shipping_address" rows="3" required><?= htmlspecialchars($user['address']) ?></textarea>
+                            <textarea class="form-control" id="shipping_address" name="shipping_address" rows="3" required><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="order_note" class="form-label">หมายเหตุ (ถ้ามี)</label>

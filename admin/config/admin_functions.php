@@ -83,3 +83,39 @@ function uploadProductImage($file) {
         return ['success' => false, 'message' => 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์'];
     }
 }
+
+// /**
+//  * แปลงสถานะการชำระเงินเป็นข้อความภาษาไทย
+//  */
+// function getPaymentStatusText($status) {
+//     $statuses = [
+//         'pending' => 'รอชำระเงิน',
+//         'paid' => 'ชำระเงินแล้ว',
+//         'failed' => 'ชำระเงินล้มเหลว'
+//     ];
+//     return $statuses[$status] ?? $status;
+// }
+
+// /**
+//  * แปลงวันที่เป็นรูปแบบไทย
+//  */
+// function thaiDate($datetime, $showTime = false) {
+//     $thaiMonth = [
+//         'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน',
+//         'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
+//         'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+//     ];
+    
+//     $date = new DateTime($datetime);
+//     $day = $date->format('j');
+//     $month = $thaiMonth[$date->format('n') - 1];
+//     $year = $date->format('Y') + 543;
+//     $time = $date->format('H:i');
+    
+//     $thaiDate = "{$day} {$month} {$year}";
+//     if ($showTime) {
+//         $thaiDate .= " เวลา {$time} น.";
+//     }
+    
+//     return $thaiDate;
+// }
