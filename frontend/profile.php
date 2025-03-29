@@ -110,7 +110,7 @@ include '../includes/navbar.php';
                         <i class="fas fa-lock me-2"></i>เปลี่ยนรหัสผ่าน
                     </a>
                     <?php if ($user['role'] == 'admin'): ?>
-                        <a href="<?= BASE_URL ?>admin/" class="list-group-item list-group-item-action text-danger">
+                        <a href="<?= BASE_URL ?>admin/dashboard.php" class="list-group-item list-group-item-action text-danger">
                             <i class="fas fa-cog me-2"></i>แผงควบคุม
                         </a>
                     <?php endif; ?>
@@ -216,12 +216,6 @@ include '../includes/navbar.php';
                 </div>
                 <div class="card-body">
                     <div class="border p-3 rounded bg-light">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <!-- <h6 class="mb-0">ที่อยู่หลัก</h6> -->
-                            <button class="btn btn-sm btn-outline-success">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </div>
                         <p class="mb-1"><?= htmlspecialchars($user['fullname']) ?></p>
                         <p class="mb-1"><?= htmlspecialchars($user['phone']) ?></p>
                         <p class="mb-0"><?= nl2br(htmlspecialchars($user['address'])) ?></p>
