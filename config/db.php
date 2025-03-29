@@ -6,7 +6,7 @@ define('DB_PASS', '47Gexr43@');
 define('DB_NAME', 'punsib_online');
 
 // กำหนด URL ของเว็บไซต์
-define('BASE_URL', 'https://punsib.mrluciana.com');
+define('BASE_URL', 'https://punsib.mrluciana.com/');
 define('ADMIN_URL', BASE_URL . 'admin/');
 
 // เริ่ม Session
