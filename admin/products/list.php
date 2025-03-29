@@ -62,7 +62,7 @@ include '../../includes/admin-navbar.php';
                                 <tr>
                                     <td><?= $product['id'] ?></td>
                                     <td>
-                                        <img src="<?= BASE_URL . ($product['image'] ?: 'assets/images/product1.jpg') ?>" 
+                                        <img src="<?= BASE_URL . ('uploads/products/' . $product['image']) ?>" 
                                              alt="<?= htmlspecialchars($product['name']) ?>" 
                                              width="50">
                                     </td>

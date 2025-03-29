@@ -49,16 +49,16 @@ function getPaymentStatusColor($status) {
 
 // ฟังก์ชันอัปโหลดรูปภาพ
 function uploadProductImage($file) {
-    $targetDir = "../../../assets/uploads/products/";
+    $targetDir = "../../uploads/products/";
     $fileName = uniqid() . '_' . basename($file["name"]);
     $targetFile = $targetDir . $fileName;
     $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-    // ตรวจสอบว่าเป็นรูปภาพจริงหรือไม่
-    $check = getimagesize($file["tmp_name"]);
-    if ($check === false) {
-        return ['success' => false, 'message' => 'ไฟล์ที่อัปโหลดไม่ใช่รูปภาพ'];
-    }
+    // // ตรวจสอบว่าเป็นรูปภาพจริงหรือไม่
+    // $check = getimagesize($file["tmp_name"]);
+    // if ($check === false) {
+    //     return ['success' => false, 'message' => 'ไฟล์ที่อัปโหลดไม่ใช่รูปภาพ'];
+    // }
 
     // ตรวจสอบขนาดไฟล์ (ไม่เกิน 5MB)
     if ($file["size"] > 5000000) {
@@ -78,7 +78,7 @@ function uploadProductImage($file) {
 
     // พยายามอัปโหลดไฟล์
     if (move_uploaded_file($file["tmp_name"], $targetFile)) {
-        return ['success' => true, 'file_path' => 'assets/uploads/products/' . $fileName];
+        return ['success' => true, 'file_path' => $fileName];
     } else {
         return ['success' => false, 'message' => 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์'];
     }
