@@ -123,7 +123,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
                         ไปที่หน้าร้าน
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item d-flex align-items-center py-2" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <a class="dropdown-item d-flex align-items-center py-2" href="<?= BASE_URL ?>logout.php" data-toggle="modal" data-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-fw me-2 text-primary"></i>
                         ออกจากระบบ
                     </a>
