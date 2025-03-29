@@ -23,7 +23,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
             </a>
         </div>
         <!-- Brand Logo -->
-        <a class="navbar-brand d-flex align-items-center mx-2" href="dashboard.php">
+        <a class="navbar-brand d-flex align-items-center mx-2" href="<?= BASE_URL ?>admin/dashboard.php">
             <!-- <img src="<?= BASE_URL ?>assets/images/logo-white.png" height="32" alt="Admin Logo" class="mr-2"> -->
             <span class="font-weight-bold">ระบบหลังบ้าน</span>
         </a>
