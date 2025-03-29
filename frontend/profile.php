@@ -207,7 +207,7 @@ include '../includes/navbar.php';
                         </div>
                     <?php else: ?>
                         <div class="text-center py-4">
-                            <img src="<?= BASE_URL ?>assets/images/empty-order.png" alt="No orders" class="img-fluid mb-3" style="max-height: 150px;">
+                            <img src="<?= BASE_URL ?>assets/images/no-order.png" alt="No orders" class="img-fluid mb-3" style="max-height: 150px;">
                             <h5 class="text-muted">คุณยังไม่มีคำสั่งซื้อ</h5>
                             <p class="text-muted">เริ่มช้อปปิ้งและค้นหาสินค้าที่คุณชื่นชอบได้เลย</p>
                             <a href="products.php" class="btn btn-success mt-2">
