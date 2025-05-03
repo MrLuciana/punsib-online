@@ -155,9 +155,12 @@ include '../includes/navbar.php';
                 <div class="col-md-4 col-6 mb-4">
                     <div class="card category-card border-0 shadow-sm h-100">
                         <a href="products.php?category=<?= $category['id'] ?>" class="text-decoration-none">
-                            <img src="<?= BASE_URL . ($category['image'] ?? 'assets/images/product1.jpg') ?>"
-                                class="card-img-top"
-                                alt="<?= $category['name'] ?>">
+                            <?php
+                            $imagePath = isset($category['image']) && $category['image']
+                                ? BASE_URL . 'uploads/categories/' . $category['image']
+                                : BASE_URL . 'assets/images/product1.jpg';
+                            ?>
+                            <img src="<?= $imagePath ?>" class="card-img-top" alt="<?= $category['name'] ?>">
                             <div class="card-body text-center">
                                 <h5 class="card-title mb-0"><?= $category['name'] ?></h5>
                                 <small class="text-muted">สินค้า <?= $category['product_count'] ?> รายการ</small>

@@ -10,28 +10,53 @@ if (!isAdmin()) {
 
 $pageTitle = "เพิ่มหมวดหมู่";
 
-// ตรวจสอบการส่งฟอร์ม
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $status = isset($_POST['status']) ? 1 : 0;
+    $imageName = null;
 
-    // ตรวจสอบข้อมูล
     if (empty($name)) {
         setAlert('danger', 'กรุณากรอกชื่อหมวดหมู่');
     } else {
         try {
-            // ตรวจสอบว่ามีชื่อหมวดหมู่ซ้ำหรือไม่
+            // ตรวจสอบชื่อซ้ำ
             $stmt = $conn->prepare("SELECT id FROM categories WHERE name = ?");
             $stmt->execute([$name]);
-            
+
             if ($stmt->rowCount() > 0) {
                 setAlert('danger', 'มีชื่อหมวดหมู่นี้อยู่แล้ว');
             } else {
-                // เพิ่มข้อมูลลงฐานข้อมูล
-                $stmt = $conn->prepare("INSERT INTO categories (name, description, status) VALUES (?, ?, ?)");
-                $stmt->execute([$name, $description, $status]);
-                
+                // จัดการอัปโหลดรูปภาพ
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                    $fileTmpPath = $_FILES['image']['tmp_name'];
+                    $fileName = $_FILES['image']['name'];
+                    $fileType = mime_content_type($fileTmpPath);
+
+                    if (in_array($fileType, $allowedTypes)) {
+                        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+                        $newFileName = uniqid('cat_', true) . '.' . $ext;
+                        $uploadPath = '../../uploads/categories/' . $newFileName;
+
+                        if (!is_dir('../../uploads/categories')) {
+                            mkdir('../../uploads/categories', 0777, true);
+                        }
+
+                        if (move_uploaded_file($fileTmpPath, $uploadPath)) {
+                            $imageName = $newFileName;
+                        } else {
+                            setAlert('danger', 'ไม่สามารถอัปโหลดรูปภาพได้');
+                        }
+                    } else {
+                        setAlert('danger', 'อนุญาตเฉพาะไฟล์ JPEG, PNG และ GIF เท่านั้น');
+                    }
+                }
+
+                // บันทึกข้อมูลลงฐานข้อมูล
+                $stmt = $conn->prepare("INSERT INTO categories (name, description, status, image) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$name, $description, $status, $imageName]);
+
                 setAlert('success', 'เพิ่มหมวดหมู่เรียบร้อยแล้ว');
                 redirect(BASE_URL . '/admin/categories/list.php');
             }
@@ -63,25 +88,30 @@ include '../../includes/admin-navbar.php';
 
             <div class="card">
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="name" class="form-label">ชื่อหมวดหมู่ <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="name" name="name" required 
                                    value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="description" class="form-label">คำอธิบาย</label>
                             <textarea class="form-control" id="description" name="description" rows="3"><?= 
                                 htmlspecialchars($_POST['description'] ?? '') ?></textarea>
                         </div>
-                        
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">รูปภาพหมวดหมู่</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                        </div>
+
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="status" name="status" 
                                    <?= isset($_POST['status']) ? 'checked' : 'checked' ?>>
                             <label class="form-check-label" for="status">เปิดใช้งาน</label>
                         </div>
-                        
+
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save me-2"></i> บันทึกข้อมูล
                         </button>
@@ -92,6 +122,4 @@ include '../../includes/admin-navbar.php';
     </div>
 </div>
 
-<?php
-include '../../includes/footer.php';
-?>
+<?php include '../../includes/footer.php'; ?>
