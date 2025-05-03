@@ -93,23 +93,23 @@ include '../includes/navbar.php';
                     <form id="filterForm" method="get" action="products.php">
                         <div class="mb-3">
                             <label for="search" class="form-label">ค้นหาสินค้า</label>
-                            <input type="text" class="form-control" id="search" name="search" 
-                                   value="<?= htmlspecialchars($search) ?>" placeholder="ชื่อสินค้า...">
+                            <input type="text" class="form-control" id="search" name="search"
+                                value="<?= htmlspecialchars($search) ?>" placeholder="ชื่อสินค้า...">
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="category" class="form-label">หมวดหมู่</label>
                             <select class="form-select" id="category" name="category">
                                 <option value="">ทั้งหมด</option>
                                 <?php foreach ($categories as $category): ?>
-                                    <option value="<?= $category['id'] ?>" 
+                                    <option value="<?= $category['id'] ?>"
                                         <?= ($category_id == $category['id']) ? 'selected' : '' ?>>
                                         <?= htmlspecialchars($category['name']) ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="sort" class="form-label">เรียงตาม</label>
                             <select class="form-select" id="sort" name="sort">
@@ -120,7 +120,7 @@ include '../includes/navbar.php';
                                 <option value="discount" <?= ($sort == 'discount') ? 'selected' : '' ?>>สินค้าลดราคา</option>
                             </select>
                         </div>
-                        
+
                         <button type="submit" class="btn btn-success w-100">
                             <i class="fas fa-search me-2"></i>ค้นหา
                         </button>
@@ -128,7 +128,7 @@ include '../includes/navbar.php';
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-9">
             <!-- ส่วนแสดงผลสินค้า -->
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -137,7 +137,7 @@ include '../includes/navbar.php';
                     <?= number_format($totalProducts) ?> สินค้า
                 </div>
             </div>
-            
+
             <?php if (empty($products)): ?>
                 <div class="alert alert-info">
                     <i class="fas fa-info-circle me-2"></i>ไม่พบสินค้าที่คุณค้นหา
@@ -152,13 +152,13 @@ include '../includes/navbar.php';
                                         ลด <?= number_format($product['price'] - $product['discount_price'], 2) ?> บาท
                                     </span>
                                 <?php endif; ?>
-                                
+
                                 <a href="product-detail.php?id=<?= $product['id'] ?>">
-                                    <img src="<?= asset($product['image'] ?? 'assets/images/product1.jpg') ?>" 
-                                         class="card-img-top" 
-                                         alt="<?= htmlspecialchars($product['name']) ?>">
+                                    <img src="<?= BASE_URL ?>uploads/products/<?= htmlspecialchars($product['image']) ?>"
+                                        class="card-img-top"
+                                        alt="<?= htmlspecialchars($product['name']) ?>">
                                 </a>
-                                
+
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <span class="badge bg-light text-dark">
@@ -174,17 +174,17 @@ include '../includes/navbar.php';
                                             </span>
                                         <?php endif; ?>
                                     </div>
-                                    
+
                                     <h5 class="card-title mt-2">
                                         <a href="product-detail.php?id=<?= $product['id'] ?>" class="text-decoration-none text-dark">
                                             <?= htmlspecialchars($product['name']) ?>
                                         </a>
                                     </h5>
-                                    
+
                                     <p class="card-text text-muted small">
                                         <?= mb_substr(strip_tags($product['description']), 0, 60) ?>...
                                     </p>
-                                    
+
                                     <div class="d-flex justify-content-between align-items-center mt-3">
                                         <div>
                                             <?php if ($product['discount_price'] > 0): ?>
@@ -200,10 +200,10 @@ include '../includes/navbar.php';
                                                 </span>
                                             <?php endif; ?>
                                         </div>
-                                        
-                                        <button class="btn btn-sm btn-outline-success add-to-cart" 
-                                                data-id="<?= $product['id'] ?>"
-                                                <?= ($product['stock'] <= 0) ? 'disabled' : '' ?>>
+
+                                        <button class="btn btn-sm btn-outline-success add-to-cart"
+                                            data-id="<?= $product['id'] ?>"
+                                            <?= ($product['stock'] <= 0) ? 'disabled' : '' ?>>
                                             <i class="fas fa-cart-plus"></i>
                                         </button>
                                     </div>
@@ -212,30 +212,30 @@ include '../includes/navbar.php';
                         </div>
                     <?php endforeach; ?>
                 </div>
-                
+
                 <!-- Pagination -->
                 <?php if ($totalPages > 1): ?>
                     <nav class="mt-5">
                         <ul class="pagination justify-content-center">
                             <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link" 
-                                   href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">
+                                <a class="page-link"
+                                    href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">
                                     <i class="fas fa-chevron-left"></i>
                                 </a>
                             </li>
-                            
+
                             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                 <li class="page-item <?= ($page == $i) ? 'active' : '' ?>">
-                                    <a class="page-link" 
-                                       href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>">
+                                    <a class="page-link"
+                                        href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>">
                                         <?= $i ?>
                                     </a>
                                 </li>
                             <?php endfor; ?>
-                            
+
                             <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-                                <a class="page-link" 
-                                   href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">
+                                <a class="page-link"
+                                    href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
                             </li>
@@ -248,105 +248,105 @@ include '../includes/navbar.php';
 </div>
 
 <script>
-$(document).ready(function() {
-    // ระบบเพิ่มสินค้าเข้าตะกร้า
-    $(document).on('click', '.add-to-cart', function() {
-        const productId = $(this).data('id');
-        const button = $(this);
-        
-        // ปิดการคลิกชั่วคราวเพื่อป้องกันการคลิกซ้ำ
-        button.prop('disabled', true);
-        
-        // แสดงไอคอน loading
-        const originalHtml = button.html();
-        button.html('<i class="fas fa-spinner fa-spin"></i>');
-        
-        $.ajax({
-            url: '<?= BASE_URL ?>includes/cart/add-to-cart.php',
-            method: 'POST',
-            data: { 
-                product_id: productId, 
-                quantity: 1,
-                csrf_token: '<?= isset($_SESSION['csrf_token']) ? $_SESSION['csrf_token'] : '' ?>'
-            },
-            dataType: 'json',
-            success: function(response) {
-                if(response.success) {
-                    // อัปเดตจำนวนสินค้าในตะกร้า
-                    $('.cart-count').text(response.cart_count);
-                    
-                    // แสดงข้อความสำเร็จแบบโต้ตอบ
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    });
-                    
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'เพิ่มสินค้าลงตะกร้าเรียบร้อยแล้ว'
-                    });
-                } else {
-                    if (response.login_required) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'กรุณาเข้าสู่ระบบ',
-                            text: 'คุณต้องเข้าสู่ระบบก่อนจึงจะสามารถเพิ่มสินค้าลงตะกร้าได้',
-                            showCancelButton: true,
-                            confirmButtonText: 'เข้าสู่ระบบ',
-                            cancelButtonText: 'ปิด',
-                            allowOutsideClick: false
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = '<?= BASE_URL ?>login.php?redirect=' + 
-                                    encodeURIComponent(window.location.href);
+    $(document).ready(function() {
+        // ระบบเพิ่มสินค้าเข้าตะกร้า
+        $(document).on('click', '.add-to-cart', function() {
+            const productId = $(this).data('id');
+            const button = $(this);
+
+            // ปิดการคลิกชั่วคราวเพื่อป้องกันการคลิกซ้ำ
+            button.prop('disabled', true);
+
+            // แสดงไอคอน loading
+            const originalHtml = button.html();
+            button.html('<i class="fas fa-spinner fa-spin"></i>');
+
+            $.ajax({
+                url: '<?= BASE_URL ?>includes/cart/add-to-cart.php',
+                method: 'POST',
+                data: {
+                    product_id: productId,
+                    quantity: 1,
+                    csrf_token: '<?= isset($_SESSION['csrf_token']) ? $_SESSION['csrf_token'] : '' ?>'
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // อัปเดตจำนวนสินค้าในตะกร้า
+                        $('.cart-count').text(response.cart_count);
+
+                        // แสดงข้อความสำเร็จแบบโต้ตอบ
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
                             }
                         });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'เกิดข้อผิดพลาด',
-                            text: response.message
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'เพิ่มสินค้าลงตะกร้าเรียบร้อยแล้ว'
                         });
+                    } else {
+                        if (response.login_required) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'กรุณาเข้าสู่ระบบ',
+                                text: 'คุณต้องเข้าสู่ระบบก่อนจึงจะสามารถเพิ่มสินค้าลงตะกร้าได้',
+                                showCancelButton: true,
+                                confirmButtonText: 'เข้าสู่ระบบ',
+                                cancelButtonText: 'ปิด',
+                                allowOutsideClick: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '<?= BASE_URL ?>login.php?redirect=' +
+                                        encodeURIComponent(window.location.href);
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'เกิดข้อผิดพลาด',
+                                text: response.message
+                            });
+                        }
                     }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'เกิดข้อผิดพลาด',
+                        text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
+                    });
+                },
+                complete: function() {
+                    // คืนสถานะปุ่มเป็นปกติ
+                    button.prop('disabled', false);
+                    button.html(originalHtml);
                 }
-            },
-            error: function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'เกิดข้อผิดพลาด',
-                    text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
-                });
-            },
-            complete: function() {
-                // คืนสถานะปุ่มเป็นปกติ
-                button.prop('disabled', false);
-                button.html(originalHtml);
-            }
+            });
+        });
+
+        // ระบบกรองสินค้า
+        $('#filterForm').on('change', 'select', function() {
+            $('#filterForm').submit();
+        });
+
+        // ป้องกันการคลิกขวาที่ปุ่ม
+        $(document).on('contextmenu', '.add-to-cart', function(e) {
+            e.preventDefault();
+        });
+
+        // ป้องกันการดับเบิลคลิก
+        $(document).on('dblclick', '.add-to-cart', function(e) {
+            e.preventDefault();
         });
     });
-    
-    // ระบบกรองสินค้า
-    $('#filterForm').on('change', 'select', function() {
-        $('#filterForm').submit();
-    });
-
-    // ป้องกันการคลิกขวาที่ปุ่ม
-    $(document).on('contextmenu', '.add-to-cart', function(e) {
-        e.preventDefault();
-    });
-
-    // ป้องกันการดับเบิลคลิก
-    $(document).on('dblclick', '.add-to-cart', function(e) {
-        e.preventDefault();
-    });
-});
 </script>
 
 

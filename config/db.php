@@ -11,8 +11,8 @@ define('DB_NAME', 'punsib_online');
 // define('DB_NAME', 'punsib');
 
 // กำหนด URL ของเว็บไซต์
-define('BASE_URL', 'http://punsib.mrluciana.com/');
-// define('BASE_URL', 'http://localhost/punsib-online/');
+// define('BASE_URL', 'http://punsib.mrluciana.com/');
+define('BASE_URL', 'http://localhost/punsib-online/');
 define('ADMIN_URL', BASE_URL . 'admin/');
 
 // เริ่ม Session
