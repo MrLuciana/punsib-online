@@ -4,6 +4,15 @@ require_once '../config/functions.php';
 
 $pageTitle = "ร้านขนมปั้นสิบยายนิดพัทลุง";
 
+// ดึงข้อมูลผู้ใช้จากฐานข้อมูล
+$user = null; // กำหนดค่าเริ่มต้น
+if (isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->execute([$userId]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 // ดึงสินค้าแนะนำ (Featured Products)
 $stmt = $conn->prepare("
     SELECT p.*, c.name as category_name 
@@ -575,7 +584,7 @@ include '../includes/navbar.php';
     }
 
     .category-card .card-img-top {
-        height: 150px;
+        height: 200px;
         object-fit: cover;
     }
 
