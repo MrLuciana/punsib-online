@@ -8,7 +8,7 @@ $pageTitle = "ตะกร้าสินค้า - ร้านขนมปั
 if (!isLoggedIn()) {
     $_SESSION['redirect_url'] = BASE_URL . 'cart.php';
     setAlert('warning', 'กรุณาเข้าสู่ระบบเพื่อดูตะกร้าสินค้า');
-    redirect(BASE_URL .'login.php');
+    redirect(BASE_URL . 'login.php');
 }
 
 // ดึงข้อมูลสินค้าในตะกร้า
@@ -89,10 +89,10 @@ include '../includes/navbar.php';
                                         <tr class="align-middle" data-id="<?= $item['id'] ?>">
                                             <td>
                                                 <a href="product-detail.php?id=<?= $item['id'] ?>">
-                                                    <img src="<?= asset($item['image'] ?? 'assets/images/product1.jpg') ?>" 
-                                                         class="img-fluid rounded-2" 
-                                                         alt="<?= htmlspecialchars($item['name']) ?>"
-                                                         style="width: 80px; height: 80px; object-fit: cover;">
+                                                    <img src="<?= BASE_URL ?>/uploads/products/<?= $item['image'] ?>"
+                                                        class="img-fluid rounded-2"
+                                                        alt="<?= htmlspecialchars($item['name']) ?>"
+                                                        style="width: 80px; height: 80px; object-fit: cover;">
                                                 </a>
                                             </td>
                                             <td>
@@ -120,22 +120,22 @@ include '../includes/navbar.php';
                                             </td>
                                             <td>
                                                 <div class="input-group input-group-sm">
-                                                    <button class="btn btn-outline-secondary minus-btn" 
-                                                            type="button" 
-                                                            data-id="<?= $item['id'] ?>"
-                                                            <?= $item['quantity'] <= 1 ? 'disabled' : '' ?>>
+                                                    <button class="btn btn-outline-secondary minus-btn"
+                                                        type="button"
+                                                        data-id="<?= $item['id'] ?>"
+                                                        <?= $item['quantity'] <= 1 ? 'disabled' : '' ?>>
                                                         <i class="fas fa-minus"></i>
                                                     </button>
-                                                    <input type="number" 
-                                                           class="form-control text-center quantity-input" 
-                                                           value="<?= $item['quantity'] ?>" 
-                                                           min="1" 
-                                                           max="<?= $item['stock'] ?>"
-                                                           data-id="<?= $item['id'] ?>">
-                                                    <button class="btn btn-outline-secondary plus-btn" 
-                                                            type="button" 
-                                                            data-id="<?= $item['id'] ?>"
-                                                            <?= $item['quantity'] >= $item['stock'] ? 'disabled' : '' ?>>
+                                                    <input type="number"
+                                                        class="form-control text-center quantity-input"
+                                                        value="<?= $item['quantity'] ?>"
+                                                        min="1"
+                                                        max="<?= $item['stock'] ?>"
+                                                        data-id="<?= $item['id'] ?>">
+                                                    <button class="btn btn-outline-secondary plus-btn"
+                                                        type="button"
+                                                        data-id="<?= $item['id'] ?>"
+                                                        <?= $item['quantity'] >= $item['stock'] ? 'disabled' : '' ?>>
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </div>
@@ -147,8 +147,8 @@ include '../includes/navbar.php';
                                                 <?= number_format($total, 2) ?> บาท
                                             </td>
                                             <td class="text-center">
-                                                <button class="btn btn-sm btn-outline-danger remove-item" 
-                                                        data-id="<?= $item['cart_id'] ?>">
+                                                <button class="btn btn-sm btn-outline-danger remove-item"
+                                                    data-id="<?= $item['cart_id'] ?>">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </td>
@@ -191,7 +191,7 @@ include '../includes/navbar.php';
                         <div class="d-flex justify-content-between mb-2">
                             <span>ค่าจัดส่ง</span>
                             <span id="shippingCost">
-                                <?= $shippingFee == 0 ? '<span class="text-success">ฟรี</span>' : number_format($shippingFee, 2).' บาท' ?>
+                                <?= $shippingFee == 0 ? '<span class="text-success">ฟรี</span>' : number_format($shippingFee, 2) . ' บาท' ?>
                             </span>
                         </div>
                         <hr>
@@ -216,208 +216,210 @@ include '../includes/navbar.php';
 </div>
 
 <script>
-$(document).ready(function() {
-    // ระบบเพิ่ม/ลดจำนวนสินค้า
-    $('.plus-btn').click(function() {
-        const productId = $(this).data('id');
-        const input = $(this).siblings('.quantity-input');
-        const newQuantity = parseInt(input.val()) + 1;
-        updateCartItem(productId, newQuantity);
-    });
-
-    $('.minus-btn').click(function() {
-        const productId = $(this).data('id');
-        const input = $(this).siblings('.quantity-input');
-        const newQuantity = parseInt(input.val()) - 1;
-        if (newQuantity >= 1) {
+    $(document).ready(function() {
+        // ระบบเพิ่ม/ลดจำนวนสินค้า
+        $('.plus-btn').click(function() {
+            const productId = $(this).data('id');
+            const input = $(this).siblings('.quantity-input');
+            const newQuantity = parseInt(input.val()) + 1;
             updateCartItem(productId, newQuantity);
-        }
-    });
+        });
 
-    // ระบบอัปเดตจำนวนสินค้าเมื่อเปลี่ยนค่าใน input
-    $('.quantity-input').change(function() {
-        const productId = $(this).data('id');
-        const newQuantity = parseInt($(this).val());
-        if (newQuantity >= 1) {
-            updateCartItem(productId, newQuantity);
-        } else {
-            $(this).val(1);
-        }
-    });
+        $('.minus-btn').click(function() {
+            const productId = $(this).data('id');
+            const input = $(this).siblings('.quantity-input');
+            const newQuantity = parseInt(input.val()) - 1;
+            if (newQuantity >= 1) {
+                updateCartItem(productId, newQuantity);
+            }
+        });
 
-    // ระบบลบสินค้า
-    $('.remove-item').click(function() {
-        const cartId = $(this).data('id');
-        removeCartItem(cartId);
-    });
+        // ระบบอัปเดตจำนวนสินค้าเมื่อเปลี่ยนค่าใน input
+        $('.quantity-input').change(function() {
+            const productId = $(this).data('id');
+            const newQuantity = parseInt($(this).val());
+            if (newQuantity >= 1) {
+                updateCartItem(productId, newQuantity);
+            } else {
+                $(this).val(1);
+            }
+        });
 
-    // ระบบล้างตะกร้า
-    $('#clearCart').click(function() {
-        Swal.fire({
-            title: 'ล้างตะกร้าสินค้า',
-            text: 'คุณแน่ใจว่าต้องการลบสินค้าทั้งหมดออกจากตะกร้า?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#198754',
-            cancelButtonColor: '#dc3545',
-            confirmButtonText: 'ล้างตะกร้า',
-            cancelButtonText: 'ยกเลิก'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '<?= BASE_URL ?>includes/cart/clear-cart.php',
-                    method: 'POST',
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'ล้างตะกร้าเรียบร้อย',
-                                showConfirmButton: false,
-                                timer: 1500
-                            }).then(() => {
-                                location.reload();
-                            });
-                        } else {
+        // ระบบลบสินค้า
+        $('.remove-item').click(function() {
+            const cartId = $(this).data('id');
+            removeCartItem(cartId);
+        });
+
+        // ระบบล้างตะกร้า
+        $('#clearCart').click(function() {
+            Swal.fire({
+                title: 'ล้างตะกร้าสินค้า',
+                text: 'คุณแน่ใจว่าต้องการลบสินค้าทั้งหมดออกจากตะกร้า?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#198754',
+                cancelButtonColor: '#dc3545',
+                confirmButtonText: 'ล้างตะกร้า',
+                cancelButtonText: 'ยกเลิก'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '<?= BASE_URL ?>includes/cart/clear-cart.php',
+                        method: 'POST',
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'ล้างตะกร้าเรียบร้อย',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เกิดข้อผิดพลาด',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function() {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'เกิดข้อผิดพลาด',
-                                text: response.message
+                                text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
                             });
                         }
-                    },
-                    error: function() {
+                    });
+                }
+            });
+        });
+
+        // ฟังก์ชันอัปเดตสินค้าในตะกร้า
+        function updateCartItem(productId, quantity) {
+            $.ajax({
+                url: '<?= BASE_URL ?>includes/cart/update-cart.php',
+                method: 'POST',
+                data: {
+                    product_id: productId,
+                    quantity: quantity
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // อัปเดตจำนวนสินค้าในตะกร้า
+                        $('.cart-count').text(response.cart_count);
+                        // รีโหลดหน้าเพื่อแสดงผลลัพธ์ใหม่
+                        location.reload();
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'เกิดข้อผิดพลาด',
-                            text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
+                            text: response.message
                         });
                     }
-                });
-            }
-        });
-    });
-
-    // ฟังก์ชันอัปเดตสินค้าในตะกร้า
-    function updateCartItem(productId, quantity) {
-        $.ajax({
-            url: '<?= BASE_URL ?>includes/cart/update-cart.php',
-            method: 'POST',
-            data: { 
-                product_id: productId, 
-                quantity: quantity 
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    // อัปเดตจำนวนสินค้าในตะกร้า
-                    $('.cart-count').text(response.cart_count);
-                    // รีโหลดหน้าเพื่อแสดงผลลัพธ์ใหม่
-                    location.reload();
-                } else {
+                },
+                error: function() {
                     Swal.fire({
                         icon: 'error',
                         title: 'เกิดข้อผิดพลาด',
-                        text: response.message
+                        text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
                     });
                 }
-            },
-            error: function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'เกิดข้อผิดพลาด',
-                    text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
-                });
-            }
-        });
-    }
+            });
+        }
 
-    // ฟังก์ชันลบสินค้าในตะกร้า
-    function removeCartItem(cartId) {
-        Swal.fire({
-            title: 'ลบสินค้า',
-            text: 'คุณแน่ใจว่าต้องการลบสินค้านี้ออกจากตะกร้า?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#198754',
-            cancelButtonColor: '#dc3545',
-            confirmButtonText: 'ลบสินค้า',
-            cancelButtonText: 'ยกเลิก'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '<?= BASE_URL ?>includes/cart/remove-from-cart.php',
-                    method: 'POST',
-                    data: { cart_id: cartId },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                            // อัปเดตจำนวนสินค้าในตะกร้า
-                            $('.cart-count').text(response.cart_count);
-                            // ลบแถวสินค้าจากตาราง
-                            $(`tr[data-id="${response.product_id}"]`).remove();
-                            
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'ลบสินค้าเรียบร้อย',
-                                showConfirmButton: false,
-                                timer: 1500
-                            }).then(() => {
-                                if (response.cart_count == 0) {
-                                    location.reload();
-                                }
-                            });
-                        } else {
+        // ฟังก์ชันลบสินค้าในตะกร้า
+        function removeCartItem(cartId) {
+            Swal.fire({
+                title: 'ลบสินค้า',
+                text: 'คุณแน่ใจว่าต้องการลบสินค้านี้ออกจากตะกร้า?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#198754',
+                cancelButtonColor: '#dc3545',
+                confirmButtonText: 'ลบสินค้า',
+                cancelButtonText: 'ยกเลิก'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '<?= BASE_URL ?>includes/cart/remove-from-cart.php',
+                        method: 'POST',
+                        data: {
+                            cart_id: cartId
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                // อัปเดตจำนวนสินค้าในตะกร้า
+                                $('.cart-count').text(response.cart_count);
+                                // ลบแถวสินค้าจากตาราง
+                                $(`tr[data-id="${response.product_id}"]`).remove();
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'ลบสินค้าเรียบร้อย',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    if (response.cart_count == 0) {
+                                        location.reload();
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เกิดข้อผิดพลาด',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function() {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'เกิดข้อผิดพลาด',
-                                text: response.message
+                                text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
                             });
                         }
-                    },
-                    error: function() {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'เกิดข้อผิดพลาด',
-                            text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'
-                        });
-                    }
-                });
-            }
-        });
-    }
-});
+                    });
+                }
+            });
+        }
+    });
 </script>
 
 <style>
-.cart-container {
-    min-height: calc(100vh - 150px);
-}
-
-.table th {
-    white-space: nowrap;
-}
-
-.quantity-input {
-    width: 50px;
-    -moz-appearance: textfield;
-}
-
-.quantity-input::-webkit-outer-spin-button,
-.quantity-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.sticky-top {
-    z-index: 1;
-}
-
-@media (max-width: 992px) {
-    .sticky-top {
-        position: static !important;
+    .cart-container {
+        min-height: calc(100vh - 150px);
     }
-}
+
+    .table th {
+        white-space: nowrap;
+    }
+
+    .quantity-input {
+        width: 50px;
+        -moz-appearance: textfield;
+    }
+
+    .quantity-input::-webkit-outer-spin-button,
+    .quantity-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .sticky-top {
+        z-index: 1;
+    }
+
+    @media (max-width: 992px) {
+        .sticky-top {
+            position: static !important;
+        }
+    }
 </style>
 
 <?php

@@ -3,19 +3,28 @@
         <div class="row">
             <div class="col-md-4">
                 <h5>เกี่ยวกับร้าน</h5>
-                <p>ร้านขนมปั้นสิบยายนิดพัทลุง ขนมพื้นบ้านรสชาติดี ทำด้วยใจ ส่งถึงมือคุณ</p>
+                <p>ร้านขนมปั้นสิบยายนิดพัทลุง ขนมพื้นบ้านรสชาติดี <br> ทำด้วยใจ ส่งถึงมือคุณ</p>
             </div>
             <div class="col-md-4">
                 <h5>ติดต่อเรา</h5>
-                <p><i class="fas fa-map-marker-alt"></i> 123 ถนนเทศบาล อำเภอเมือง พัทลุง</p>
-                <p><i class="fas fa-phone"></i> 099-999-9999</p>
-                <p><i class="fas fa-envelope"></i> info@punsib-yayinid.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> 217 หมู่7 ตำบลมะกอกเหนือ <br>อำเภอควนขนุน จังหวัดพัทลุง 93150</p>
+                <p><i class="fas fa-phone"></i> 065 549 9166
+                </p>
+                <p><i class="fas fa-envelope"></i> maemmyza2534@gmail.com </p>
             </div>
             <div class="col-md-4">
                 <h5>ช่องทางสังคมออนไลน์</h5>
-                <a href="#" class="text-white me-2"><i class="fab fa-facebook fa-2x"></i></a>
-                <a href="#" class="text-white me-2"><i class="fab fa-line fa-2x"></i></a>
-                <a href="#" class="text-white me-2"><i class="fab fa-instagram fa-2x"></i></a>
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/profile.php?id=100071561465338" class="text-white me-2 text-decoration-none" target="_blank" rel="noopener">
+                <i class="fab fa-facebook fa-2x"></i>
+                </a>
+
+                <!-- LINE -->
+                <a href="https://line.me/R/ti/p/@797mdqdo" class="text-white me-2 text-decoration-none" target="_blank" rel="noopener">
+                <i class="fab fa-line fa-2x"></i>
+                </a>
+
+               
             </div>
         </div>
         <hr>

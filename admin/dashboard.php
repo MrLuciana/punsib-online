@@ -41,7 +41,7 @@ include '../includes/admin-head.php';
 
 <body class="admin-dashboard">
     <?php include '../includes/admin-navbar.php'; ?>
-    
+
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -61,56 +61,64 @@ include '../includes/admin-head.php';
                 <!-- Summary Cards -->
                 <div class="row mb-4">
                     <div class="col-md-3">
-                        <div class="card text-white bg-primary mb-3">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="card-title">สินค้าทั้งหมด</h5>
-                                        <h2 class="mb-0"><?= number_format($totalProducts) ?></h2>
+                        <a href="products/list.php" style="text-decoration: none;">
+                            <div class="card text-white bg-primary mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">สินค้าทั้งหมด</h5>
+                                            <h2 class="mb-0"><?= number_format($totalProducts) ?></h2>
+                                        </div>
+                                        <i class="fas fa-box fa-3x"></i>
                                     </div>
-                                    <i class="fas fa-box fa-3x"></i>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-md-3">
-                        <div class="card text-white bg-success mb-3">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="card-title">หมวดหมู่</h5>
-                                        <h2 class="mb-0"><?= number_format($totalCategories) ?></h2>
+                        <a href="categories/list.php" style="text-decoration: none;">
+                            <div class="card text-white bg-success mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">หมวดหมู่</h5>
+                                            <h2 class="mb-0"><?= number_format($totalCategories) ?></h2>
+                                        </div>
+                                        <i class="fas fa-tags fa-3x"></i>
                                     </div>
-                                    <i class="fas fa-tags fa-3x"></i>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-md-3">
-                        <div class="card text-white bg-warning mb-3">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="card-title">คำสั่งซื้อ</h5>
-                                        <h2 class="mb-0"><?= number_format($totalOrders) ?></h2>
+                        <a href="orders/list.php" style="text-decoration: none;">
+                            <div class="card text-white bg-warning mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">คำสั่งซื้อ</h5>
+                                            <h2 class="mb-0"><?= number_format($totalOrders) ?></h2>
+                                        </div>
+                                        <i class="fas fa-shopping-bag fa-3x"></i>
                                     </div>
-                                    <i class="fas fa-shopping-bag fa-3x"></i>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-md-3">
-                        <div class="card text-white bg-info mb-3">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="card-title">ลูกค้า</h5>
-                                        <h2 class="mb-0"><?= number_format($totalCustomers) ?></h2>
+                        <a href="customers/list.php" style="text-decoration: none;">
+                            <div class="card text-white bg-info mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">ลูกค้า</h5>
+                                            <h2 class="mb-0"><?= number_format($totalCustomers) ?></h2>
+                                        </div>
+                                        <i class="fas fa-users fa-3x"></i>
                                     </div>
-                                    <i class="fas fa-users fa-3x"></i>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
@@ -179,4 +187,5 @@ include '../includes/admin-head.php';
 
     <?php include '../includes/footer.php'; ?>
 </body>
+
 </html>

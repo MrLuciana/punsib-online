@@ -35,7 +35,7 @@ $totalPages = ceil($totalCustomers / $perPage);
 $stmt = $conn->prepare("
     SELECT * FROM users 
     $where 
-    ORDER BY created_at DESC 
+    ORDER BY created_at ASC 
     LIMIT ? OFFSET ?
 ");
 
@@ -92,9 +92,10 @@ include '../../includes/admin-navbar.php';
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $index = 1; ?>
                                 <?php foreach ($customers as $customer): ?>
                                 <tr>
-                                    <td><?= $customer['id'] ?></td>
+                                    <td><?= $index++ ?></td>
                                     <td><?= htmlspecialchars($customer['username']) ?></td>
                                     <td><?= htmlspecialchars($customer['fullname']) ?></td>
                                     <td><?= htmlspecialchars($customer['email']) ?></td>

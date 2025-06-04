@@ -14,10 +14,13 @@ include '../includes/navbar.php';
         <div class="row align-items-center">
             <div class="col-md-6">
                 <h1 class="display-4 fw-bold mb-4">เกี่ยวกับยายนิด</h1>
-                <p class="lead">รักษ์คุณค่าทางวัฒนธรรม รสชาติดั่งเดิม แบบฉบับพัทลุง</p>
+                <p class="lead">จำหน่ายขนมปั้นสิบไส้ปลาสูตรดั้งเดิมพัทลุง  💰
+                                <br>เราตั้งใจคัดสรรสินค้าดีๆมาให้คุณลูกค้าที่น่ารักทุกท่าน 📣
+                                <br>หากต้องการหาสินค้าดีๆ สามารถนั่งช้อปปิ้งอยู่ที่บ้านได้สบายๆ 🛒
+                                <br>จัดส่งสินค้า จันทร์-ศุกร์ 🚚💨</p>
             </div>
             <div class="col-md-6">
-                <img src="<?= BASE_URL ?>assets/images/about-hero.webp" alt="เกี่ยวกับยายนิด" class="img-fluid rounded shadow">
+                <img src="<?= BASE_URL ?>assets/images/about1.jpg" alt="เกี่ยวกับยายนิด" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
@@ -33,34 +36,50 @@ include '../includes/navbar.php';
                 
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-year">1970</div>
+                        <div class="timeline-year">2007</div>
                         <div class="timeline-content">
                             <h3>จุดเริ่มต้น</h3>
-                            <p>ยายนิดเริ่มทำขนมปั้นสิบขายในตลาดนัดพัทลุง ด้วยสูตรดั้งเดิมที่สืบทอดมาจากบรรพบุรุษ</p>
+                            <p>ยายนิดเริ่มทำขนมปั้นสิบที่บ้าน ด้วยสูตรดั้งเดิมที่สืบทอดมาจากบรรพบุรุษ</p>
                         </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="timeline-year">1995</div>
+                        <div class="timeline-year">2009</div>
                         <div class="timeline-content">
-                            <h3>เปิดร้านถาวร</h3>
-                            <p>ตั้งร้านขนมปั้นสิบยายนิดอย่างเป็นทางการในตัวเมืองพัทลุง</p>
+                            <h3>เริ่มทำขายส่ง</h3>
+                            <p>ยายนิดได้เริ่มทำขนมขายส่งตามร้านขายส่ง ในจังหวัดพัทลุง</p>
                         </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="timeline-year">2010</div>
+                        <div class="timeline-year">2013</div>
                         <div class="timeline-content">
-                            <h3>ขยายสายผลิต</h3>
-                            <p>เพิ่มเมนูขนมไทยโบราอื่นๆ นอกเหนือจากขนมปั้นสิบ</p>
+                            <h3>ยายนิดถ่ายทอดสูตร</h3>
+                            <p>ยายนิดได้ทำการถ่ายทอดสูตรขนมปั้นสิบให้ลูกหลานสานต่อ</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-content">
+                            <h3>เปิดโรงงานขนมปั้นสิบ</h3>
+                            <p>ลูกหลานยายนิด เปิดโรงงานขนมปั้นสิบในพื้นที่ <br> บ้านท่ามะนาว อำเภอควนขนุน จังหวัดพัทลุง 93150 </p>
                         </div>
                     </div>
                     
                     <div class="timeline-item">
                         <div class="timeline-year">2020</div>
                         <div class="timeline-content">
+                            <h3>ขยายการผลิต</h3>
+                            <p>โรงงานขนมปั้นสิบ ได้เพิ่มขนมพื้นบ้านในจังหวัดพัทลุง เพื่อการเลือกซื้อที่หลากหลายยิ่งขึ้น </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-content">
                             <h3>เปิดตัวเว็บไซต์</h3>
-                            <p>ขยายช่องทางขายออนไลน์เพื่อให้ลูกค้าั่งซื้อได้สะดวกยิ่งขึ้น</p>
+                            <p>ขยายช่องทางขายออนไลน์เพื่อให้ลูกค้าสั่งซื้อได้สะดวกยิ่งขึ้น</p>
                         </div>
                     </div>
                 </div>
@@ -81,7 +100,7 @@ include '../includes/navbar.php';
                         <i class="fas fa-heart"></i>
                     </div>
                     <h3>ทำด้วยใจ</h3>
-                    <p>ทุกชิ้นทำด้วยความตั้งใจและความพิถีพิถัน เพื่อให้ได้ขนมที่มีรสชาติดีที่สุด</p>
+                    <p>ทุกชิ้นทำด้วยความตั้งใจและความพิถีพิถัน <br> เพื่อให้ได้ขนมที่มีรสชาติดีที่สุด</p>
                 </div>
             </div>
             
@@ -91,7 +110,7 @@ include '../includes/navbar.php';
                         <i class="fas fa-leaf"></i>
                     </div>
                     <h3>วัตถุดิบคุณภาพ</h3>
-                    <p>เลือกใช้เฉพาะวัตถุดิบคุณภาพดี ปลอดสารเคมี เพื่อสุขภาพที่ดีของผู้บริโภค</p>
+                    <p>เลือกใช้เฉพาะวัตถุดิบคุณภาพดี ปลอดสารเคมี <br> เพื่อสุขภาพที่ดีของผู้บริโภค</p>
                 </div>
             </div>
             
@@ -101,7 +120,7 @@ include '../includes/navbar.php';
                         <i class="fas fa-history"></i>
                     </div>
                     <h3>สูตรดั้งเดิม</h3>
-                    <p>ยึดมั่นในสูตรดั้งเดิมที่สืบทอดกันมา ไม่ตัดทอนขั้นตอนเพื่อความรวดเร็ว</p>
+                    <p>ยึดมั่นในสูตรดั้งเดิมที่สืบทอดกันมา <br> ไม่ตัดทอนขั้นตอนเพื่อความรวดเร็ว</p>
                 </div>
             </div>
         </div>
@@ -116,21 +135,21 @@ include '../includes/navbar.php';
         <div class="row g-4 justify-content-center">
             <div class="col-lg-3 col-md-6">
                 <div class="card team-card border-0 text-center h-100">
-                    <img src="<?= BASE_URL ?>assets/images/team-yainid.webp" class="card-img-top" alt="ยายนิด">
+                    <img src="<?= BASE_URL ?>assets/images/nid.jpg" class="card-img-top" alt="ยายนิด">
                     <div class="card-body">
                         <h3 class="card-title">ยายนิด</h3>
                         <p class="text-muted">ผู้ก่อตั้ง</p>
-                        <p class="card-text">ผู้คิดค้นสูตรขนมปั้นสิบอันเลื่องชื่อ</p>
+                        <p class="card-text">ผู้สืบทอดสูตรขนมปั้นสิบจากบรรพบุรุษ</p>
                     </div>
                 </div>
             </div>
             
             <div class="col-lg-3 col-md-6">
                 <div class="card team-card border-0 text-center h-100">
-                    <img src="<?= BASE_URL ?>assets/images/team-somchai.webp" class="card-img-top" alt="สมชาย">
+                    <img src="<?= BASE_URL ?>assets/images/tiw.jpg" class="card-img-top" alt="วนิดา">
                     <div class="card-body">
-                        <h3 class="card-title">สมชาย</h3>
-                        <p class="text-muted">หัวหน้ารัว</p>
+                        <h3 class="card-title">วนิดา</h3>
+                        <p class="text-muted">ผู้สืบทอดสูตรจากยายนิด</p>
                         <p class="card-text">ผู้ควบคุมการผลิตและพัฒนาสูตร</p>
                     </div>
                 </div>
@@ -138,7 +157,7 @@ include '../includes/navbar.php';
             
             <div class="col-lg-3 col-md-6">
                 <div class="card team-card border-0 text-center h-100">
-                    <img src="<?= BASE_URL ?>assets/images/team-somporn.webp" class="card-img-top" alt="สมพร">
+                    <img src="<?= BASE_URL ?>assets/images/mam.jpg" class="card-img-top" alt="สุนิสา">
                     <div class="card-body">
                         <h3 class="card-title">สมพร</h3>
                         <p class="text-muted">ฝ่ายการตลาด</p>
@@ -147,16 +166,7 @@ include '../includes/navbar.php';
                 </div>
             </div>
             
-            <div class="col-lg-3 col-md-6">
-                <div class="card team-card border-0 text-center h-100">
-                    <img src="<?= BASE_URL ?>assets/images/team-nidnoi.webp" class="card-img-top" alt="นิดน้อย">
-                    <div class="card-body">
-                        <h3 class="card-title">นิดน้อย</h3>
-                        <p class="text-muted">ผู้สืบทอด</p>
-                        <p class="card-text">รุ่นลูกที่กำลังเรียนรู้สูตรดั้งเดิม</p>
-                    </div>
-                </div>
-            </div>
+           
         </div>
     </div>
 </section>
@@ -167,7 +177,7 @@ include '../includes/navbar.php';
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 <h2 class="mb-4">คำสัญญาของเรา</h2>
-                <p class="lead mb-5">เรามุ่งมั่นที่จะรักษามาตรฐานและรสชาติแบบดั้งเดิมของขนมปั้นสิบยายนิด พร้อมทั้งพัฒนาบริการให้ดียิ่งขึ้นเพื่อความพึงพอใจของลูกค้าุกท่าน</p>
+                <p class="lead mb-5">เรามุ่งมั่นที่จะรักษามาตรฐานและรสชาติแบบดั้งเดิมของขนมปั้นสิบยายนิด <br>พร้อมทั้งพัฒนาบริการให้ดียิ่งขึ้นเพื่อความพึงพอใจของลูกค้าทุกท่าน</p>
                 <a href="products.php" class="btn btn-light btn-lg px-4">ชมสินค้าของเรา</a>
             </div>
         </div>
@@ -183,7 +193,7 @@ include '../includes/navbar.php';
                     <div class="card-body text-center">
                         <i class="fas fa-map-marker-alt fa-2x mb-3 text-success"></i>
                         <h3>ที่อยู่</h3>
-                        <p>123 ถนนเทศบาล<br>อำเภอเมือง พัทลุง 93000</p>
+                        <p>217 หมู่ 7 อำเภอควนขนุน<br> จังหวัดพัทลุง 93150</p>
                     </div>
                 </div>
             </div>
@@ -193,7 +203,7 @@ include '../includes/navbar.php';
                     <div class="card-body text-center">
                         <i class="fas fa-phone-alt fa-2x mb-3 text-success"></i>
                         <h3>ติดต่อเรา</h3>
-                        <p>074-123456<br>089-1234567</p>
+                        <p>065 549 9166</p>
                     </div>
                 </div>
             </div>
@@ -203,7 +213,7 @@ include '../includes/navbar.php';
                     <div class="card-body text-center">
                         <i class="fas fa-clock fa-2x mb-3 text-success"></i>
                         <h3>เวลาทำการ</h3>
-                        <p>ทุกวัน 08:00 - 18:00 น.</p>
+                        <p>ทุกวัน 08:00 - 18:00 น.<br> หยุดทุกวันจันทร์ </p>
                     </div>
                 </div>
             </div>

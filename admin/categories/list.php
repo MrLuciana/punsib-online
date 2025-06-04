@@ -11,7 +11,7 @@ if (!isAdmin()) {
 $pageTitle = "จัดการหมวดหมู่";
 
 // ดึงข้อมูลหมวดหมู่
-$stmt = $conn->query("SELECT * FROM categories ORDER BY created_at DESC");
+$stmt = $conn->query("SELECT * FROM categories ORDER BY created_at ASC");
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 include '../../includes/admin-head.php';
@@ -48,9 +48,10 @@ include '../../includes/admin-navbar.php';
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $index = 1; ?>
                                 <?php foreach ($categories as $category): ?>
                                 <tr>
-                                    <td><?= $category['id'] ?></td>
+                                    <td><?= $index++ ?></td>
                                     <td><?= htmlspecialchars($category['name']) ?></td>
                                     <td><?= htmlspecialchars($category['description'] ?? '-') ?></td>
                                     <td>

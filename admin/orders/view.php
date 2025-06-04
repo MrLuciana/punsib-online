@@ -48,7 +48,7 @@ include '../../includes/admin-navbar.php';
 <div class="container-fluid">
     <div class="row">
         <?php include '../../includes/admin-sidebar.php'; ?>
-        
+
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">รายละเอียดคำสั่งซื้อ #<?= $order['order_number'] ?></h1>
@@ -58,7 +58,7 @@ include '../../includes/admin-navbar.php';
                     </a>
                 </div>
             </div>
-            
+
             <!-- ส่วนแสดงสถานะ -->
             <div class="row mb-4">
                 <div class="col-md-6">
@@ -70,17 +70,17 @@ include '../../includes/admin-navbar.php';
                                     <?= getOrderStatusText($order['order_status']) ?>
                                 </span>
                             </div>
-                            
+
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h5 class="card-title mb-0">สถานะการชำระเงิน</h5>
                                 <span class="badge bg-<?= getPaymentStatusColor($order['payment_status']) ?>">
                                     <?= getPaymentStatusText($order['payment_status']) ?>
                                 </span>
                             </div>
-                            
+
                             <form method="post" action="update_status.php">
                                 <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
-                                
+
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="form-label">อัปเดตสถานะคำสั่งซื้อ</label>
@@ -93,7 +93,7 @@ include '../../includes/admin-navbar.php';
                                             <option value="cancelled" <?= $order['order_status'] == 'cancelled' ? 'selected' : '' ?>>ยกเลิก</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="col-md-6">
                                         <label class="form-label">อัปเดตสถานะการชำระเงิน</label>
                                         <select name="payment_status" class="form-select">
@@ -102,40 +102,44 @@ include '../../includes/admin-navbar.php';
                                             <option value="failed" <?= $order['payment_status'] == 'failed' ? 'selected' : '' ?>>ชำระเงินล้มเหลว</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-primary">
                                             <i class="fas fa-save me-1"></i> อัปเดตสถานะ
                                         </button>
+                                        <a href="export_pdf.php?id=<?= $order['id'] ?>" target="_blank" class="btn btn-outline-danger ms-2">
+                                            <i class="fas fa-file-pdf me-1"></i> ส่งออก PDF
+                                        </a>
+
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">สรุปรายการ</h5>
-                            
+
                             <div class="row mb-2">
                                 <div class="col-6">วันที่สั่งซื้อ:</div>
                                 <div class="col-6 text-end"><?= thaiDate($order['created_at'], true) ?></div>
                             </div>
-                            
+
                             <div class="row mb-2">
                                 <div class="col-6">ยอดรวม:</div>
                                 <div class="col-6 text-end"><?= number_format($order['total_amount'], 2) ?> บาท</div>
                             </div>
-                            
+
                             <div class="row mb-2">
                                 <div class="col-6">วิธีการชำระเงิน:</div>
                                 <div class="col-6 text-end">
                                     <?= $order['payment_method'] == 'bank_transfer' ? 'โอนเงินผ่านธนาคาร' : 'QR Code' ?>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-6">หมายเลขคำสั่งซื้อ:</div>
                                 <div class="col-6 text-end"><?= $order['order_number'] ?></div>
@@ -144,24 +148,24 @@ include '../../includes/admin-navbar.php';
                     </div>
                 </div>
             </div>
-            
+
             <!-- ส่วนข้อมูลลูกค้า -->
             <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">ข้อมูลลูกค้า</h5>
-                            
+
                             <div class="mb-2">
                                 <strong>ชื่อ-นามสกุล:</strong><br>
                                 <?= htmlspecialchars($order['fullname']) ?>
                             </div>
-                            
+
                             <div class="mb-2">
                                 <strong>อีเมล:</strong><br>
                                 <?= htmlspecialchars($order['email']) ?>
                             </div>
-                            
+
                             <div class="mb-2">
                                 <strong>โทรศัพท์:</strong><br>
                                 <?= $order['phone'] ?>
@@ -169,7 +173,7 @@ include '../../includes/admin-navbar.php';
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
@@ -177,25 +181,25 @@ include '../../includes/admin-navbar.php';
                             <div class="mb-2">
                                 <?= nl2br(htmlspecialchars($order['shipping_address'])) ?>
                             </div>
-                            
+
                             <?php if (!empty($order['note'])): ?>
-                            <h5 class="card-title mt-3">หมายเหตุ</h5>
-                            <div class="mb-2">
-                                <?= nl2br(htmlspecialchars($order['note'])) ?>
-                            </div>
+                                <h5 class="card-title mt-3">หมายเหตุ</h5>
+                                <div class="mb-2">
+                                    <?= nl2br(htmlspecialchars($order['note'])) ?>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- ส่วนรายการสินค้า -->
             <div class="row mb-4">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">รายการสินค้า</h5>
-                            
+
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead>
@@ -209,22 +213,22 @@ include '../../includes/admin-navbar.php';
                                     </thead>
                                     <tbody>
                                         <?php foreach ($orderItems as $index => $item): ?>
-                                        <tr>
-                                            <td><?= $index + 1 ?></td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <?php if (!empty($item['image'])): ?>
-                                                    <img src="<?= BASE_URL ?>/uploads/products/<?= $item['image'] ?>" 
-                                                         alt="<?= htmlspecialchars($item['name']) ?>" 
-                                                         class="img-thumbnail me-3" width="60">
-                                                    <?php endif; ?>
-                                                    <div><?= htmlspecialchars($item['name']) ?></div>
-                                                </div>
-                                            </td>
-                                            <td class="text-center"><?= $item['quantity'] ?></td>
-                                            <td class="text-end"><?= number_format($item['price'], 2) ?> บาท</td>
-                                            <td class="text-end"><?= number_format($item['total_price'], 2) ?> บาท</td>
-                                        </tr>
+                                            <tr>
+                                                <td><?= $index + 1 ?></td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <?php if (!empty($item['image'])): ?>
+                                                            <img src="<?= BASE_URL ?>/uploads/products/<?= $item['image'] ?>"
+                                                                alt="<?= htmlspecialchars($item['name']) ?>"
+                                                                class="img-thumbnail me-3" width="60">
+                                                        <?php endif; ?>
+                                                        <div><?= htmlspecialchars($item['name']) ?></div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><?= $item['quantity'] ?></td>
+                                                <td class="text-end"><?= number_format($item['price'], 2) ?> บาท</td>
+                                                <td class="text-end"><?= number_format($item['total_price'], 2) ?> บาท</td>
+                                            </tr>
                                         <?php endforeach; ?>
                                     </tbody>
                                     <tfoot>
@@ -239,35 +243,35 @@ include '../../includes/admin-navbar.php';
                     </div>
                 </div>
             </div>
-            
+
             <!-- ส่วนหลักฐานการชำระเงิน -->
             <?php if (!empty($order['payment_slips'])): ?>
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">หลักฐานการชำระเงิน</h5>
-                            
-                            <div class="text-center">
-                                <a href="<?= BASE_URL ?>/uploads/payment_slips/<?= $order['payment_slips'] ?>" target="_blank">
-                                    <img src="<?= BASE_URL ?>/uploads/payment_slips/<?= $order['payment_slips'] ?>" 
-                                         class="img-fluid img-thumbnail" 
-                                         style="max-height: 300px;" 
-                                         alt="หลักฐานการชำระเงิน">
-                                </a>
-                                
-                                <div class="mt-3">
-                                    <a href="<?= BASE_URL ?>/uploads/payments/<?= $order['payment_slips'] ?>" 
-                                       class="btn btn-primary" 
-                                       download="payment_<?= $order['order_number'] ?>.jpg">
-                                        <i class="fas fa-download me-1"></i> ดาวน์โหลด
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">หลักฐานการชำระเงิน</h5>
+
+                                <div class="text-center">
+                                    <a href="<?= BASE_URL ?>/uploads/payment_slips/<?= $order['payment_slips'] ?>" target="_blank">
+                                        <img src="<?= BASE_URL ?>/uploads/payment_slips/<?= $order['payment_slips'] ?>"
+                                            class="img-fluid img-thumbnail"
+                                            style="max-height: 300px;"
+                                            alt="หลักฐานการชำระเงิน">
                                     </a>
+
+                                    <div class="mt-3">
+                                        <a href="<?= BASE_URL ?>/uploads/payments/<?= $order['payment_slips'] ?>"
+                                            class="btn btn-primary"
+                                            download="payment_<?= $order['order_number'] ?>.jpg">
+                                            <i class="fas fa-download me-1"></i> ดาวน์โหลด
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <?php endif; ?>
         </main>
     </div>

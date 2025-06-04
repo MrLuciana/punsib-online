@@ -154,9 +154,11 @@ include '../includes/navbar.php';
                                 <?php endif; ?>
 
                                 <a href="product-detail.php?id=<?= $product['id'] ?>">
-                                    <img src="<?= BASE_URL ?>uploads/products/<?= htmlspecialchars($product['image']) ?>"
-                                        class="card-img-top"
-                                        alt="<?= htmlspecialchars($product['name']) ?>">
+                                <img src="<?= BASE_URL ?>uploads/products/<?= htmlspecialchars($product['image']) ?>"
+                                    class="card-img-top"
+                                    style="height: 300px; object-fit: cover;"
+                                    alt="<?= htmlspecialchars($product['name']) ?>">
+
                                 </a>
 
                                 <div class="card-body">

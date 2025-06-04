@@ -1,11 +1,17 @@
 /* สไตล์สำหรับหน้ารายละเอียดสินค้า - โทนสี bronze */
 .product-main-image {
-    max-height: 500px;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
-    border: 1px solid #e6d5c3; /* เส้นขอบสี bronze อ่อน */
+    border: 1px solid #e6d5c3;
     border-radius: 8px;
-    background-color: #f8f1e8; /* พื้นหลังสี bronze อ่อน */
+    background-color: #f8f1e8;
+    display: block;
+    margin: auto;
 }
+
 
 .thumbnail-image {
     border: 2px solid #e6d5c3; /* เส้นขอบสี bronze อ่อน */

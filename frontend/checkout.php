@@ -174,9 +174,9 @@ include '../includes/navbar.php';
                                 <i class="fas fa-university me-2"></i>โอนเงินผ่านธนาคาร
                             </label>
                             <div class="mt-2 ps-4 text-muted small">
-                                <p class="mb-1">บัญชีธนาคารไทยพาณิชย์</p>
-                                <p class="mb-1">ชื่อบัญชี: ร้านขนมปั้นสิบยายนิด</p>
-                                <p class="mb-1">เลขที่บัญชี: 123-4-56789-0</p>
+                                <p class="mb-1">บัญชีธนาคารออมสิน</p>
+                                <p class="mb-1">ชื่อบัญชี:นางสาวฐานิยา นวลกริ่ม</p>
+                                <p class="mb-1">เลขที่บัญชี:020242374195</p>
                             </div>
                         </div>
                         <div class="form-check mb-3">

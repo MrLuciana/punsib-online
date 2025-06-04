@@ -51,7 +51,15 @@ include '../includes/navbar.php';
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= BASE_URL ?>">หน้าแรก</a></li>
             <li class="breadcrumb-item"><a href="products.php">สินค้าทั้งหมด</a></li>
-            <li class="breadcrumb-item"><a href="products.php?category=<?= $product['category_id'] ?>"><?= htmlspecialchars($product['category_name']) ?></a></li>
+            <?php if (!empty($product['category_id']) && !empty($product['category_name'])): ?>
+                <li class="breadcrumb-item">
+                    <a href="products.php?category=<?= $product['category_id'] ?>">
+                        <?= htmlspecialchars($product['category_name']) ?>
+                    </a>
+                </li>
+            <?php else: ?>
+                <li class="breadcrumb-item">ไม่มีหมวดหมู่</li>
+            <?php endif; ?>
             <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($product['name']) ?></li>
         </ol>
     </nav>
@@ -67,19 +75,6 @@ include '../includes/navbar.php';
                             alt="<?= htmlspecialchars($product['name']) ?>"
                             id="mainProductImage" />
                     </div>
-
-                    <!-- ภาพย่อย (ถ้ามี) -->
-                    <div class="row g-2">
-                        <div class="col-3">
-                            <div class="ratio ratio-1x1">
-                                <img src="<?= BASE_URL ?>uploads/products/<?= htmlspecialchars($product['image']) ?>"
-                                    class="img-fluid rounded-2 cursor-pointer"
-                                    onclick="changeMainImage(this)"
-                                    style="object-fit: cover;">
-                            </div>
-                        </div>
-                        <!-- สามารถเพิ่มภาพย่อยเพิ่มเติมได้ที่นี่ -->
-                    </div>
                 </div>
             </div>
         </div>
@@ -88,9 +83,14 @@ include '../includes/navbar.php';
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <h1 class="h2 mb-3"><?= htmlspecialchars($product['name']) ?></h1>
-
+                    <?php if (!empty($product['category_name'])): ?>
+                        <span class="badge bg-success me-2">
+                            <?= htmlspecialchars($product['category_name']) ?>
+                        </span>
+                    <?php else: ?>
+                        <span class="badge bg-secondary me-2">ไม่มีหมวดหมู่</span>
+                    <?php endif; ?>
                     <div class="d-flex align-items-center mb-3">
-                        <span class="badge bg-success me-2"><?= htmlspecialchars($product['category_name']) ?></span>
                         <div class="text-muted small">
                             <i class="fas fa-eye me-1"></i> <?= number_format($product['views'] ?? 0) ?> วิว
                             <i class="fas fa-shopping-bag ms-3 me-1"></i> <?= number_format($product['sold'] ?? 0) ?> ขายแล้ว
@@ -184,8 +184,7 @@ include '../includes/navbar.php';
                                     <ul>
                                         <li>จัดส่งทั่วประเทศผ่าน Kerry Express และ Flash Express</li>
                                         <li>เวลาจัดส่ง 1-3 วันทำการ</li>
-                                        <li>ค่าจัดส่งเริ่มต้น 30 บาท (ฟรีเมื่อซื้อครบ 500 บาท)</li>
-                                        <li>รับสินค้าที่ร้าน: 123 ถนนเทศบาล อำเภอเมือง พัทลุง</li>
+                                        <li>ค่าจัดส่งเริ่มต้น 50 บาท (ฟรีเมื่อซื้อครบ 300 บาท)</li>
                                     </ul>
                                 </div>
                             </div>
@@ -431,10 +430,26 @@ include '../includes/navbar.php';
         transition: all 0.3s ease;
     }
 
-    .product-main-image:hover {
-        box-shadow: 0 5px 15px rgba(205, 127, 50, 0.1);
-        /* เงาสี bronze */
-    }
+    .product-main-image {
+    width: 100%;
+    max-width: 500px;   /* กำหนดความกว้างสูงสุด */
+    height: auto;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    overflow: visible;
+    margin: 0 auto;     /* จัดภาพให้อยู่กึ่งกลาง */
+}
+
+.product-main-image img {
+    width: 100%;
+    max-height: 550px;  /* ความสูงสูงสุด */
+    object-fit: contain; /* ป้องกันภาพบิดเบี้ยว */
+    display: block;
+}
+
+
 
     /* ตัวชี้เมาส์ */
     .cursor-pointer {

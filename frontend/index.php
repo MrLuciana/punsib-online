@@ -73,7 +73,7 @@ include '../includes/navbar.php';
         <div class="row align-items-center">
             <div class="col-md-6 hero-content">
                 <h1 class="display-4 fw-bold mb-4">ขนมปั้นสิบยายนิด</h1>
-                <p class="lead mb-5">รักษ์คุณค่าทางวัฒนธรรม รสชาติดั่งเดิม แบบฉบับพัทลุง</p>
+                <p class="lead mb-5">ขนมอร่อย คุณภาพดี ทำสดใหม่ ราคากันเอง</p>
                 <div class="d-flex gap-3">
                     <a href="products.php" class="btn btn-success btn-lg px-4">
                         <i class="fas fa-shopping-bag me-2"></i>ช้อปเลย
@@ -279,12 +279,12 @@ include '../includes/navbar.php';
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <img src="<?= BASE_URL ?>assets/images/product1.jpg" alt="เกี่ยวกับยายนิด" class="img-fluid rounded shadow">
+                <img src="<?= BASE_URL ?>assets/images/product2.jpg" alt="เกี่ยวกับยายนิด" class="img-fluid rounded shadow">
             </div>
             <div class="col-md-6">
                 <h2 class="mb-4">เกี่ยวกับยายนิด</h2>
-                <p class="lead">ขนมปั้นสิบสูตรดั้งเดิมจากยายนิด สูตรลับที่สืบทอดมากว่า 50 ปี</p>
-                <p>เราคือร้านขนมพื้นบ้านที่นำเสนอขนมไทยโบราณสูตรดั้งเดิม ด้วยวัตถุดิบคุณภาพและการทำมือทุกขั้นตอน เพื่อรักษาคุณค่าของวัฒนธรรมการกินขนมไทยแบบดั้งเดิม</p>
+                <p class="lead">ขนมปั้นสิบสูตรดั้งเดิมจากยายนิด สูตรที่สืบทอดมานานกว่า 18 ปี</p>
+                <p>เราคือร้านขนมพื้นบ้านที่นำเสนอขนมไทยโบราณสูตรดั้งเดิม <br> ด้วยวัตถุดิบคุณภาพและการทำมือทุกขั้นตอน <br> เพื่อรักษาคุณค่าของวัฒนธรรมการกินขนมไทยแบบดั้งเดิม</p>
                 <a href="about.php" class="btn btn-success mt-3">อ่านเพิ่มเติม</a>
             </div>
         </div>
@@ -563,7 +563,7 @@ include '../includes/navbar.php';
 
     .product-card .card-img-top {
         transition: transform 0.3s ease;
-        height: 200px;
+        height: 340px;
         object-fit: cover;
     }
 

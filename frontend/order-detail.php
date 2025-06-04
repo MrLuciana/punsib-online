@@ -186,9 +186,9 @@ include '../includes/navbar.php';
                             <div class="border p-3 rounded bg-light">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p class="mb-1"><strong>ธนาคาร:</strong> กสิกรไทย</p>
-                                        <p class="mb-1"><strong>ชื่อบัญชี:</strong> นางนิด นิรนาม</p>
-                                        <p class="mb-1"><strong>เลขที่บัญชี:</strong> 123-4-56789-0</p>
+                                        <p class="mb-1"><strong>ธนาคาร:</strong> ออมสิน</p>
+                                        <p class="mb-1"><strong>ชื่อบัญชี:</strong> นางสาวฐานิยา นวลกริ่ม</p>
+                                        <p class="mb-1"><strong>เลขที่บัญชี:</strong> 020242374195</p>
                                     </div>
                                     <div class="col-md-6">
                                         <p class="mb-1"><strong>จำนวนเงิน:</strong> <?= number_format($order['total_amount'], 2) ?> บาท</p>

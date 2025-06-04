@@ -130,7 +130,7 @@ include '../includes/navbar.php';
                                 <?php foreach ($orderItems as $item): ?>
                                     <tr>
                                         <td>
-                                            <img src="<?= asset($item['image'] ?? 'assets/images/product1.jpg') ?>" 
+                                    <img src="<?= BASE_URL ?>uploads/products/<?= htmlspecialchars($item['image']) ?>"
                                                  class="img-fluid rounded-2" 
                                                  alt="<?= htmlspecialchars($item['name']) ?>"
                                                  style="width: 60px; height: 60px; object-fit: cover;">
@@ -181,15 +181,15 @@ include '../includes/navbar.php';
                                 <i class="fas fa-university me-2"></i>
                                 <strong>โอนเงินผ่านธนาคาร</strong>
                                 <p class="mb-1 mt-2">กรุณาชำระเงินภายใน 24 ชั่วโมง</p>
-                                <p class="mb-1">บัญชีธนาคารไทยพาณิชย์</p>
-                                <p class="mb-1">ชื่อบัญชี: ร้านขนมปั้นสิบยายนิด</p>
-                                <p class="mb-1">เลขที่บัญชี: 123-4-56789-0</p>
+                                <p class="mb-1">บัญชีธนาคารออมสิน</p>
+                                <p class="mb-1">ชื่อบัญชี:นางสาวฐานิยา นวลกริ่ม</p>
+                                <p class="mb-1">เลขที่บัญชี:020242374195</p>
                                 <p class="mb-0">จำนวนเงิน: <?= number_format($order['total_amount'], 2) ?> บาท</p>
                             <?php elseif ($order['payment_method'] === 'qr_code'): ?>
                                 <i class="fas fa-qrcode me-2"></i>
                                 <strong>ชำระผ่าน QR Code</strong>
                                 <div class="text-center mt-3">
-                                    <img src="<?= asset('assets/images/qr-payment.png') ?>" alt="QR Code" class="img-fluid" style="max-width: 200px;">
+                                <img src="<?= BASE_URL ?>assets/images/qr-payment.jpg" alt="QR Code" class="img-fluid" style="max-width: 200px;">
                                     <p class="mt-2 mb-0">สแกน QR Code เพื่อชำระเงิน</p>
                                     <p class="mb-0">จำนวนเงิน: <?= number_format($order['total_amount'], 2) ?> บาท</p>
                                 </div>
