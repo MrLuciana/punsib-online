@@ -31,6 +31,7 @@ if (!empty($payment_status)) {
 }
 
 if (!empty($date_from)) {
+    // ไม่ต้องเปลี่ยนแปลงส่วนนี้ เพราะ datepicker จะส่งค่าเป็น YYYY-MM-DD มาให้อยู่แล้ว
     $sql .= " AND DATE(o.created_at) >= ?";
     $params[] = $date_from;
 }
@@ -67,7 +68,6 @@ include '../../includes/admin-navbar.php';
                 </div>
             </div>
 
-            <!-- ฟอร์มกรองข้อมูล -->
             <div class="card mb-4">
                 <div class="card-header bg-white">
                     <h5 class="mb-0"><i class="fas fa-filter me-2"></i>กรองข้อมูล</h5>
@@ -97,11 +97,17 @@ include '../../includes/admin-navbar.php';
                         </div>
                         <div class="col-md-3">
                             <label for="date_from" class="form-label">จากวันที่</label>
-                            <input type="date" class="form-control" id="date_from" name="date_from" value="<?= $date_from ?>">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="date_from" name="date_from" value="<?= $date_from ?>" placeholder="เลือกวันที่เริ่มต้น">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label for="date_to" class="form-label">ถึงวันที่</label>
-                            <input type="date" class="form-control" id="date_to" name="date_to" value="<?= $date_to ?>">
+                             <div class="input-group">
+                                <input type="text" class="form-control" id="date_to" name="date_to" value="<?= $date_to ?>" placeholder="เลือกวันที่สิ้นสุด">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </div>
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary me-2">
@@ -115,7 +121,6 @@ include '../../includes/admin-navbar.php';
                 </div>
             </div>
 
-            <!-- ตารางแสดงผล -->
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -171,7 +176,20 @@ include '../../includes/admin-navbar.php';
 
 <script>
 $(document).ready(function() {
-    // ระบบ DataTable
+    // ระบบ Datepicker
+    const datepickerOptions = {
+        format: 'yyyy-mm-dd', // รูปแบบข้อมูลที่จะส่งไปให้ PHP (สำคัญมาก)
+        language: 'th',          // กำหนดเป็นภาษาไทย
+        autoclose: true,         // ปิดอัตโนมัติเมื่อเลือกวันที่
+        todayHighlight: true,    // ไฮไลท์วันที่ปัจจุบัน
+        orientation: 'bottom auto'
+    };
+
+    $('#date_from').datepicker(datepickerOptions);
+    $('#date_to').datepicker(datepickerOptions);
+
+
+    // ระบบ DataTable (โค้ดเดิมของคุณ)
     $('#ordersTable').DataTable({
         responsive: true,
         order: [[4, 'desc']],
@@ -189,6 +207,11 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.th.min.js"></script>
 
 <?php
 include '../../includes/footer.php';
