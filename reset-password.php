@@ -1,8 +1,13 @@
 <?php
+session_start();
+
 require_once 'config/db.php';
 require_once 'config/functions.php';
 
 // --- เริ่มส่วนประมวลผล (Processing Logic) ---
+
+$token = '';
+$email = '';
 
 // ตรวจสอบ Token และ Email จาก URL ก่อนแสดงฟอร์ม
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -40,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 // ประมวลผลเมื่อมีการส่งฟอร์มตั้งรหัสผ่านใหม่
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1. ตรวจสอบ CSRF และข้อมูลที่ส่งมา
-    if (!verifyCsrfToken($_POST['_csrf_token'])) {
+    if (!verifyCsrfToken($_POST['csrf_token'])) {
         setAlert('danger', 'การดำเนินการไม่ถูกต้อง (Invalid CSRF Token)');
         redirect(BASE_URL . 'login.php');
     }
