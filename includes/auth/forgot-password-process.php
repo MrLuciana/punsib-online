@@ -66,12 +66,12 @@ if ($user) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com'; // หรือ SMTP โฮสต์ของคุณ
         $mail->SMTPAuth = true;
-        $mail->Username = 'your-email@gmail.com'; // 🔁 ใส่อีเมลคุณ
-        $mail->Password = 'your-app-password';    // 🔁 ใช้ App Password ไม่ใช่รหัสผ่านบัญชี
+        $mail->Username = 'thaniya.n@rmutsvmail.com'; // 🔁 ใส่อีเมลคุณ
+        $mail->Password = 'swob pymf tgbc ovkg';    // 🔁 ใช้ App Password ไม่ใช่รหัสผ่านบัญชี
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->setFrom('your-email@gmail.com', $shop_name);
+        $mail->setFrom('thaniya.n@rmutsvmail.com', $shop_name);
         $mail->addAddress($email, $user['username']);
         $mail->isHTML(true);
         $mail->Subject = $subject;
