@@ -44,7 +44,7 @@ if ($user) {
         $expires_at = date('Y-m-d H:i:s', time() + ($token_lifetime_minutes * 60));
 
         $conn->prepare("INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES (?, ?, ?)")
-             ->execute([$user['id'], $token_hash, $expires_at]);
+            ->execute([$user['id'], $token_hash, $expires_at]);
 
         $reset_link = BASE_URL . "reset-password.php?token=$token&email=" . urlencode($email);
         $subject = "คำขอตั้งรหัสผ่านใหม่สำหรับ $shop_name";
@@ -76,6 +76,9 @@ if ($user) {
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $message;
+        $mail->CharSet = 'UTF-8'; // สำคัญมากเพื่อให้แสดงภาษาไทยได้ถูกต้อง
+        $mail->Encoding = 'base64'; // ป้องกันอักขระเพี้ยน โดยเฉพาะใน Subject
+
 
         $mail->send();
 
@@ -88,5 +91,3 @@ if ($user) {
 
 setAlert('success', $generic_success_message);
 redirect(BASE_URL . 'forgot-password.php');
-
-?>
